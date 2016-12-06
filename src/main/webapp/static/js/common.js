@@ -1,14 +1,9 @@
 //加载top页面
 function init() {
-    loadTop();
-    loadFoot();
+    loadMain();
     window.scrollTo(0,0);
 }
 
-function loadTop() {
-    $("#top").load("top");
-}
-
-function loadFoot() {
-    $("#foot").load("foot");
+function loadMain() {
+    $("#main").load("main");
 }

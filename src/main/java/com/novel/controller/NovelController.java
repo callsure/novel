@@ -31,14 +31,9 @@ public class NovelController {
 		return "index";
 	}
 
-	@RequestMapping(value = "/top", method = RequestMethod.GET)
+	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String top(Model model){
-		return "top";
-	}
-
-	@RequestMapping(value = "/foot", method = RequestMethod.GET)
-	public String foot(Model model){
-		return "foot";
+		return "main";
 	}
 
 	@RequestMapping(value = "/classify/{id}")

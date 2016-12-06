@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.novel.mapper.TnovelMapper" >
+  <resultMap id="BaseResultMap" type="com.novel.entitys.Tnovel" >
+    <id column="n_id" property="nId" jdbcType="INTEGER" />
+    <result column="n_name" property="nName" jdbcType="VARCHAR" />
+    <result column="n_author" property="nAuthor" jdbcType="VARCHAR" />
+    <result column="n_url" property="nUrl" jdbcType="VARCHAR" />
+    <result column="n_type" property="nType" jdbcType="VARCHAR" />
+    <result column="n_desc" property="nDesc" jdbcType="VARCHAR" />
+    <result column="n_add_time" property="nAddTime" jdbcType="TIMESTAMP" />
+    <result column="site_id" property="siteId" jdbcType="INTEGER" />
+    <result column="n_status" property="nStatus" jdbcType="INTEGER" />
+    <result column="n_last_chapter" property="nLastChapter" jdbcType="VARCHAR" />
+    <result column="n_last_chapter_url" property="nLastChapterUrl" jdbcType="VARCHAR" />
+    <result column="n_browse" property="nBrowse" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    n_id, n_name, n_author, n_url, n_type, n_desc, n_add_time, site_id, n_status, n_last_chapter, 
+    n_last_chapter_url, "n_browse"
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_novel
+    where n_id = #{nId,jdbcType=INTEGER}
+  </select>
+  <select id="getsNovelByType" parameterType="string" resultMap="BaseResultMap">
+    select n_id, n_name, n_author, n_url, n_type,n_add_time, site_id, n_status,n_last_chapter,n_browse,
+    n_last_chapter_url from v_novel where n_type = #{type} order by n_browse
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_novel
+    where n_id = #{nId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.novel.entitys.Tnovel" >
+    insert into t_novel (n_id, n_name, n_author, 
+      n_url, n_type, n_desc, 
+      n_add_time, site_id, n_status, 
+      n_last_chapter, n_last_chapter_url, "n_browse"
+      )
+    values (#{nId,jdbcType=INTEGER}, #{nName,jdbcType=VARCHAR}, #{nAuthor,jdbcType=VARCHAR}, 
+      #{nUrl,jdbcType=VARCHAR}, #{nType,jdbcType=VARCHAR}, #{nDesc,jdbcType=VARCHAR}, 
+      #{nAddTime,jdbcType=TIMESTAMP}, #{siteId,jdbcType=INTEGER}, #{nStatus,jdbcType=INTEGER}, 
+      #{nLastChapter,jdbcType=VARCHAR}, #{nLastChapterUrl,jdbcType=VARCHAR}, #{nBrowse,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.novel.entitys.Tnovel" >
+    insert into t_novel
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="nId != null" >
+        n_id,
+      </if>
+      <if test="nName != null" >
+        n_name,
+      </if>
+      <if test="nAuthor != null" >
+        n_author,
+      </if>
+      <if test="nUrl != null" >
+        n_url,
+      </if>
+      <if test="nType != null" >
+        n_type,
+      </if>
+      <if test="nDesc != null" >
+        n_desc,
+      </if>
+      <if test="nAddTime != null" >
+        n_add_time,
+      </if>
+      <if test="siteId != null" >
+        site_id,
+      </if>
+      <if test="nStatus != null" >
+        n_status,
+      </if>
+      <if test="nLastChapter != null" >
+        n_last_chapter,
+      </if>
+      <if test="nLastChapterUrl != null" >
+        n_last_chapter_url,
+      </if>
+      <if test="nBrowse != null" >
+        "n_browse",
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="nId != null" >
+        #{nId,jdbcType=INTEGER},
+      </if>
+      <if test="nName != null" >
+        #{nName,jdbcType=VARCHAR},
+      </if>
+      <if test="nAuthor != null" >
+        #{nAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="nUrl != null" >
+        #{nUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="nType != null" >
+        #{nType,jdbcType=VARCHAR},
+      </if>
+      <if test="nDesc != null" >
+        #{nDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="nAddTime != null" >
+        #{nAddTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="siteId != null" >
+        #{siteId,jdbcType=INTEGER},
+      </if>
+      <if test="nStatus != null" >
+        #{nStatus,jdbcType=INTEGER},
+      </if>
+      <if test="nLastChapter != null" >
+        #{nLastChapter,jdbcType=VARCHAR},
+      </if>
+      <if test="nLastChapterUrl != null" >
+        #{nLastChapterUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="nBrowse != null" >
+        #{nBrowse,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.novel.entitys.Tnovel" >
+    update t_novel
+    <set >
+      <if test="nName != null" >
+        n_name = #{nName,jdbcType=VARCHAR},
+      </if>
+      <if test="nAuthor != null" >
+        n_author = #{nAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="nUrl != null" >
+        n_url = #{nUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="nType != null" >
+        n_type = #{nType,jdbcType=VARCHAR},
+      </if>
+      <if test="nDesc != null" >
+        n_desc = #{nDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="nAddTime != null" >
+        n_add_time = #{nAddTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="siteId != null" >
+        site_id = #{siteId,jdbcType=INTEGER},
+      </if>
+      <if test="nStatus != null" >
+        n_status = #{nStatus,jdbcType=INTEGER},
+      </if>
+      <if test="nLastChapter != null" >
+        n_last_chapter = #{nLastChapter,jdbcType=VARCHAR},
+      </if>
+      <if test="nLastChapterUrl != null" >
+        n_last_chapter_url = #{nLastChapterUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="nBrowse != null" >
+        "n_browse" = #{nBrowse,jdbcType=INTEGER},
+      </if>
+    </set>
+    where n_id = #{nId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.novel.entitys.Tnovel" >
+    update t_novel
+    set n_name = #{nName,jdbcType=VARCHAR},
+      n_author = #{nAuthor,jdbcType=VARCHAR},
+      n_url = #{nUrl,jdbcType=VARCHAR},
+      n_type = #{nType,jdbcType=VARCHAR},
+      n_desc = #{nDesc,jdbcType=VARCHAR},
+      n_add_time = #{nAddTime,jdbcType=TIMESTAMP},
+      site_id = #{siteId,jdbcType=INTEGER},
+      n_status = #{nStatus,jdbcType=INTEGER},
+      n_last_chapter = #{nLastChapter,jdbcType=VARCHAR},
+      n_last_chapter_url = #{nLastChapterUrl,jdbcType=VARCHAR},
+      "n_browse" = #{nBrowse,jdbcType=INTEGER}
+    where n_id = #{nId,jdbcType=INTEGER}
+  </update>
+</mapper>
