@@ -1,9 +1,11 @@
 package com.novel.tasks;
 
 import com.novel.interfaces.IProcessor;
+import com.novel.mapper.NclassMapper;
 import com.novel.mapper.NovelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -27,6 +29,9 @@ public class NovelSpiderTask {
 	@Resource(name = "bxwxNovelStorage")
 	private IProcessor bxwxNovelStorage;
 
+	@Resource
+	NclassMapper nclassMapper;
+
 	@Scheduled(cron = "0 15 2 ? * *")
 	public void UpdateNovelInfo(){
 		//delete n_novel data
@@ -35,6 +40,8 @@ public class NovelSpiderTask {
 			//cache data insert n_novel
 			kanShuZhongNovelStorage.process();
 			bxwxNovelStorage.process();
+			//调用存储过程,update type
+			nclassMapper.updateNovelRulesType();
 		} catch (Exception e) {
 			loger.warn("小说列表更新失败:" + e);
 		}

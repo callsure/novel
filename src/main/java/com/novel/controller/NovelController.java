@@ -1,13 +1,16 @@
 package com.novel.controller;
 
+import com.novel.entitys.Tnovel;
 import com.novel.service.NovelService;
 import com.novel.service.impl.EhcacheDB;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 
 /**
@@ -24,6 +27,7 @@ public class NovelController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(Model model){
+		ehcacheDB.getNovelRulesLists();
 		return "index";
 	}
 
@@ -35,5 +39,10 @@ public class NovelController {
 	@RequestMapping(value = "/foot", method = RequestMethod.GET)
 	public String foot(Model model){
 		return "foot";
+	}
+
+	@RequestMapping(value = "/classify/{id}")
+	public void getsHotNovelByType(@PathVariable String id){
+		List<Tnovel> list = ehcacheDB.getsNovelByType(id);
 	}
 }
