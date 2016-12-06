@@ -1,0 +1,187 @@
+/* 超小屏幕（手机，小于 768px） */
+/* 没有任何媒体查询相关的代码，因为这在 Bootstrap 中是默认的（还记得 Bootstrap 是移动设备优先的吗？） */
+
+.container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.container-fluid {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+body{
+    background: #F6F4EC;
+}
+
+#main{
+    /*padding-top: 20px;*/
+    margin-top: 1px;
+    /*margin-left: 10%;*/
+    /*width: 81%;*/
+    /*overflow: hidden;*/
+    background: #FFFFFF;
+}
+
+#main .content{
+    margin-top: 15px;
+}
+
+#main .content li{
+
+    border-bottom: 1px solid #f2f2f2;
+}
+
+#main .content .theme{
+    padding: 3px 20px;
+    background: #F0F7F0;
+    display: block;
+    color: #2EB182;
+    margin-bottom: 10px;
+}
+
+#main .content .cp{
+    float: left;
+    text-align: center;
+    width: 80px;
+    color: #888888;
+}
+
+#main .content .cont{
+    margin-left: 80px;
+    border-left: 1px solid #eee;
+    padding: 0 10px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+#main .content .cont a{
+    text-decoration: none;
+    color: #333333;
+    font-size: 18px;
+}
+
+#main .content .cont a:hover{
+    color: #42B35B;
+}
+
+#main .content .cont .info{
+    color: #B5B3B3;
+}
+#main .content .cont .intro{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#main .content .cont .intro img{
+    float: left;
+    margin-right: 5px;
+}
+
+#main .content .cont .intro a{
+    font-size: 14px;
+    color: #0ea1cc;
+}
+
+#main .content .cont .intro a:hover{
+    color: #137fcf;
+}
+
+#main .content .cp p {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#main .content .cp .stars {
+    background: url("../images/stars.gif") no-repeat;
+    display: block;
+    height: 15px;
+    margin: 6px auto 10px;
+    overflow: hidden;
+    width: 50px;
+}
+
+#main .content .cp .stars-0 {
+    background-position: -1px -138px;
+}
+
+#main .content .cp .stars-1 {
+    background-position: -1px -121px;
+}
+
+#main .content .cp .stars-2 {
+    background-position: -1px -107px;
+}
+
+#main .content .cp .stars-3 {
+    background-position: -1px -93px;
+}
+
+#main .content .cp .stars-4 {
+    background-position: -1px -79px;
+}
+
+#main .content .cp .stars-5 {
+    background-position: -1px -67px;
+}
+
+#main .content .cp .stars-6 {
+    background-position: -1px -53px;
+}
+
+#main .content .cp .stars-7 {
+    background-position: -1px -40px;
+}
+
+#main .content .cp .stars-8 {
+    background-position: -1px -26px;
+}
+
+#main .content .cp .stars-9 {
+    background-position: -1px -12px;
+}
+
+#main .content .cp .stars-10 {
+    background-position: -1px -1px;
+}
+
+/* 小屏幕（平板，大于等于 768px） */
+@media (min-width: 768px) {
+    .container {
+        width: 750px;
+    }
+    #main{
+        margin-top: 12px;
+        /*margin-left: 10%;*/
+        width: 96%;
+    }
+}
+
+/* 中等屏幕（桌面显示器，大于等于 992px） */
+@media (min-width: 992px) {
+    .container {
+        width: 970px;
+    }
+    #main{
+        margin-top: 18px;
+        /*margin-left: 10%;*/
+        width: 95%;
+    }
+}
+
+/* 大屏幕（大桌面显示器，大于等于 1200px） */
+@media (min-width: 1200px) {
+    .container {
+        width: 1170px;
+    }
+    #main{
+        margin-top: 25px;
+        /*margin-left: 10%;*/
+        width: 90%;
+    }
+}

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-CN"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>汐灵书院</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link href="../static/dist/css/bootstrap.min.css" rel="stylesheet" th:href="@{/static/dist/css/bootstrap.min.css}"/>
+    <link href="../static/css/main.css" rel="stylesheet" th:href="@{/static/css/main.css}"/>
+    <link rel="shortcut icon" href="../static/icon/book.ico" th:href="@{/static/icon/book.ico}" />
+    <script src="../static/js/jquery-3.1.0.min.js" th:src="@{/static/js/jquery-3.1.0.min.js}"></script>
+    <script src="../static/dist/js/bootstrap.min.js" th:src="@{/static/dist/js/bootstrap.min.js}"></script>
+    <script src="../static/js/common.js" th:src="@{/static/js/common.js}"></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        $(function () {
+            init();
+        });
+        /*]]>*/
+    </script>
+</head>
+<body>
+<div id="top" class="container-fluid"></div>
+<div id="main" class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <ul class="content list-unstyled">
+                <li>
+                    <span class="theme bg">热门</span>
+                </li>
+
+                <li>
+                    <div class="cp">
+                        <span class="stars stars-2"></span>
+                        <p class="num">5914</p>
+                        <p>浏览</p>
+                    </div>
+                    <div class="cont">
+                        <a href="/book/18" class="title">元气少年</a>
+                        <div class="info">
+                            张君宝/都市/连载中
+                        </div>
+                        <p class="intro">
+                            <img src="../static/images/new.png" alt="" th:src="@{/static/images/new.png}"/>
+                            <a href="/chapter/68112">第240章 我帮你磨墨</a>
+                        </p>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="cp">
+                        <span class="stars stars-0"></span>
+                        <p class="num">959</p>
+                        <p>浏览</p>
+                    </div>
+                    <div class="cont">
+                        <a href="/book/1" class="title">雪鹰领主</a>
+                        <div class="info">
+                            我吃西红柿/玄幻/连载中
+                        </div>
+                        <p class="intro">
+                            <img src="../static/images/new.png" th:src="@{/static/images/new.png}" alt="雪鹰领主">
+                            <a href="/chapter/68105">第33篇 转世 第2章 胎儿</a>
+                        </p>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="cp">
+                        <span class="stars stars-1"></span>
+                        <p class="num">493</p>
+                        <p>浏览</p>
+                    </div>
+                    <div class="cont">
+                        <a href="/book/50" class="title">圣墟</a>
+                        <div class="info">
+                            辰东/玄幻/连载中
+                        </div>
+                        <p class="intro">
+                            <img src="../static/images/new.png" th:src="@{/static/images/new.png}" alt="圣墟">
+                            <a href="/chapter/68137">第六十八章 释迦门徒</a>
+                        </p>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="cp">
+                        <span class="stars stars-3"></span>
+                        <p class="num">43</p>
+                        <p>浏览</p>
+                    </div>
+                    <div class="cont">
+                        <a href="/book/71" class="title">天道图书馆</a>
+                        <div class="info">
+                            横扫天涯/玄幻/连载中
+                        </div>
+                        <p class="intro">
+                            <img src="../static/images/new.png" th:src="@{/static/images/new.png}" alt="天道图书馆">
+                            <a href="/chapter/68147">第八十四章 暴打朱洪（上）</a>
+                        </p>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="cp">
+                        <span class="stars stars-7"></span>
+                        <p class="num">34</p>
+                        <p>浏览</p>
+                    </div>
+                    <div class="cont">
+                        <a href="/book/70" class="title">牛笔</a>
+                        <div class="info">
+                            剑西来/都市/连载中
+                        </div>
+                        <p class="intro">
+                            <img src="../static/images/new.png" th:src="@{/static/images/new.png}" alt="牛笔">
+                            <a href="/chapter/68095">第248章 百思不得其解</a>
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <ul class="content list-unstyled">
+                <li>
+                    <span class="theme bg">热门</span>
+                </li>
+
+                <li>
+                    <div class="cp">
+                        <span class="stars stars-2"></span>
+                        <p class="num">5914</p>
+                        <p>浏览</p>
+                    </div>
+                    <div class="cont">
+                        <a href="/book/18" class="title">元气少年</a>
+                        <div class="info">
+                            张君宝/都市/连载中
+                        </div>
+                        <p class="intro">
+                            <img src="../static/images/new.png" alt="" th:src="@{/static/images/new.png}"/>
+                            <a href="/chapter/68112">第240章 我帮你磨墨</a>
+                        </p>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="cp">
+                        <span class="stars stars-0"></span>
+                        <p class="num">959</p>
+                        <p>浏览</p>
+                    </div>
+                    <div class="cont">
+                        <a href="/book/1" class="title">雪鹰领主</a>
+                        <div class="info">
+                            我吃西红柿/玄幻/连载中
+                        </div>
+                        <p class="intro">
+                            <img src="../static/images/new.png" th:src="@{/static/images/new.png}" alt="雪鹰领主">
+                            <a href="/chapter/68105">第33篇 转世 第2章 胎儿</a>
+                        </p>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="cp">
+                        <span class="stars stars-1"></span>
+                        <p class="num">493</p>
+                        <p>浏览</p>
+                    </div>
+                    <div class="cont">
+                        <a href="/book/50" class="title">圣墟</a>
+                        <div class="info">
+                            辰东/玄幻/连载中
+                        </div>
+                        <p class="intro">
+                            <img src="../static/images/new.png" th:src="@{/static/images/new.png}" alt="圣墟">
+                            <a href="/chapter/68137">第六十八章 释迦门徒</a>
+                        </p>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="cp">
+                        <span class="stars stars-3"></span>
+                        <p class="num">43</p>
+                        <p>浏览</p>
+                    </div>
+                    <div class="cont">
+                        <a href="/book/71" class="title">天道图书馆</a>
+                        <div class="info">
+                            横扫天涯/玄幻/连载中
+                        </div>
+                        <p class="intro">
+                            <img src="../static/images/new.png" th:src="@{/static/images/new.png}" alt="天道图书馆">
+                            <a href="/chapter/68147">第八十四章 暴打朱洪（上）</a>
+                        </p>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="cp">
+                        <span class="stars stars-7"></span>
+                        <p class="num">34</p>
+                        <p>浏览</p>
+                    </div>
+                    <div class="cont">
+                        <a href="/book/70" class="title">牛笔</a>
+                        <div class="info">
+                            剑西来/都市/连载中
+                        </div>
+                        <p class="intro">
+                            <img src="../static/images/new.png" th:src="@{/static/images/new.png}" alt="牛笔">
+                            <a href="/chapter/68095">第248章 百思不得其解</a>
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <ul class="content list-unstyled">
+                <li>
+                    <span class="theme bg">热门</span>
+                </li>
+
+                <li>
+                    <div class="cp">
+                        <span class="stars stars-2"></span>
+                        <p class="num">5914</p>
+                        <p>浏览</p>
+                    </div>
+                    <div class="cont">
+                        <a href="/book/18" class="title">元气少年</a>
+                        <div class="info">
+                            张君宝/都市/连载中
+                        </div>
+                        <p class="intro">
+                            <img src="../static/images/new.png" alt="" th:src="@{/static/images/new.png}"/>
+                            <a href="/chapter/68112">第240章 我帮你磨墨</a>
+                        </p>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="cp">
+                        <span class="stars stars-0"></span>
+                        <p class="num">959</p>
+                        <p>浏览</p>
+                    </div>
+                    <div class="cont">
+                        <a href="/book/1" class="title">雪鹰领主</a>
+                        <div class="info">
+                            我吃西红柿/玄幻/连载中
+                        </div>
+                        <p class="intro">
+                            <img src="../static/images/new.png" th:src="@{/static/images/new.png}" alt="雪鹰领主">
+                            <a href="/chapter/68105">第33篇 转世 第2章 胎儿</a>
+                        </p>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="cp">
+                        <span class="stars stars-1"></span>
+                        <p class="num">493</p>
+                        <p>浏览</p>
+                    </div>
+                    <div class="cont">
+                        <a href="/book/50" class="title">圣墟</a>
+                        <div class="info">
+                            辰东/玄幻/连载中
+                        </div>
+                        <p class="intro">
+                            <img src="../static/images/new.png" th:src="@{/static/images/new.png}" alt="圣墟">
+                            <a href="/chapter/68137">第六十八章 释迦门徒</a>
+                        </p>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="cp">
+                        <span class="stars stars-3"></span>
+                        <p class="num">43</p>
+                        <p>浏览</p>
+                    </div>
+                    <div class="cont">
+                        <a href="/book/71" class="title">天道图书馆</a>
+                        <div class="info">
+                            横扫天涯/玄幻/连载中
+                        </div>
+                        <p class="intro">
+                            <img src="../static/images/new.png" th:src="@{/static/images/new.png}" alt="天道图书馆">
+                            <a href="/chapter/68147">第八十四章 暴打朱洪（上）</a>
+                        </p>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="cp">
+                        <span class="stars stars-7"></span>
+                        <p class="num">34</p>
+                        <p>浏览</p>
+                    </div>
+                    <div class="cont">
+                        <a href="/book/70" class="title">牛笔</a>
+                        <div class="info">
+                            剑西来/都市/连载中
+                        </div>
+                        <p class="intro">
+                            <img src="../static/images/new.png" th:src="@{/static/images/new.png}" alt="牛笔">
+                            <a href="/chapter/68095">第248章 百思不得其解</a>
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <ul class="content list-unstyled">
+                <li>
+                    <span class="theme bg">热门</span>
+                </li>
+
+                <li>
+                    <div class="cp">
+                        <span class="stars stars-2"></span>
+                        <p class="num">5914</p>
+                        <p>浏览</p>
+                    </div>
+                    <div class="cont">
+                        <a href="/book/18" class="title">元气少年</a>
+                        <div class="info">
+                            张君宝/都市/连载中
+                        </div>
+                        <p class="intro">
+                            <img src="../static/images/new.png" alt="" th:src="@{/static/images/new.png}"/>
+                            <a href="/chapter/68112">第240章 我帮你磨墨</a>
+                        </p>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="cp">
+                        <span class="stars stars-0"></span>
+                        <p class="num">959</p>
+                        <p>浏览</p>
+                    </div>
+                    <div class="cont">
+                        <a href="/book/1" class="title">雪鹰领主</a>
+                        <div class="info">
+                            我吃西红柿/玄幻/连载中
+                        </div>
+                        <p class="intro">
+                            <img src="../static/images/new.png" th:src="@{/static/images/new.png}" alt="雪鹰领主">
+                            <a href="/chapter/68105">第33篇 转世 第2章 胎儿</a>
+                        </p>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="cp">
+                        <span class="stars stars-1"></span>
+                        <p class="num">493</p>
+                        <p>浏览</p>
+                    </div>
+                    <div class="cont">
+                        <a href="/book/50" class="title">圣墟</a>
+                        <div class="info">
+                            辰东/玄幻/连载中
+                        </div>
+                        <p class="intro">
+                            <img src="../static/images/new.png" th:src="@{/static/images/new.png}" alt="圣墟">
+                            <a href="/chapter/68137">第六十八章 释迦门徒</a>
+                        </p>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="cp">
+                        <span class="stars stars-3"></span>
+                        <p class="num">43</p>
+                        <p>浏览</p>
+                    </div>
+                    <div class="cont">
+                        <a href="/book/71" class="title">天道图书馆</a>
+                        <div class="info">
+                            横扫天涯/玄幻/连载中
+                        </div>
+                        <p class="intro">
+                            <img src="../static/images/new.png" th:src="@{/static/images/new.png}" alt="天道图书馆">
+                            <a href="/chapter/68147">第八十四章 暴打朱洪（上）</a>
+                        </p>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="cp">
+                        <span class="stars stars-7"></span>
+                        <p class="num">34</p>
+                        <p>浏览</p>
+                    </div>
+                    <div class="cont">
+                        <a href="/book/70" class="title">牛笔</a>
+                        <div class="info">
+                            剑西来/都市/连载中
+                        </div>
+                        <p class="intro">
+                            <img src="../static/images/new.png" th:src="@{/static/images/new.png}" alt="牛笔">
+                            <a href="/chapter/68095">第248章 百思不得其解</a>
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div id="foot" class="container-fluid"></div>
+</body>
+</html>

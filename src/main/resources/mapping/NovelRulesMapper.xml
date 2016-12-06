@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.novel.mapper.NovelRulesMapper">
+
+    <resultMap type="com.novel.entitys.NovelRules" id="novelRules">
+        <result property="siteId" column="site_id"/>
+        <result property="siteName" column="site_name"/>
+        <result property="chapterCharset" column="chapter_charset"/>
+        <result property="chapterTitle" column="chapter_title"/>
+        <result property="chapterUrl" column="chapter_url"/>
+        <result property="chapterListSelector" column="chapter_list_selector"/>
+        <result property="detailTitleSelector" column="detail_title_selector"/>
+        <result property="detailContentSelector" column="detail_content_selector"/>
+        <result property="detailPrevSelector" column="detail_prev_selector"/>
+        <result property="detailNextSelector" column="detail_next_selector"/>
+        <result property="novelSelector" column="novel_selector"/>
+        <result property="novelNextPageSelector" column="novel_next_page_selector"/>
+        <result property="novelNameSelector" column="novel_name_selector"/>
+    </resultMap>
+
+    <sql id="novel">
+        SELECT
+            n_novel_rules.site_id,
+            n_novel_rules.site_name,
+            n_novel_rules.chapter_charset,
+            n_novel_rules.chapter_title,
+            n_novel_rules.chapter_url,
+            n_novel_rules.chapter_list_selector,
+            n_novel_rules.detail_title_selector,
+            n_novel_rules.detail_content_selector,
+            n_novel_rules.detail_prev_selector,
+            n_novel_rules.detail_next_selector,
+            n_novel_rules.novel_selector,
+            n_novel_rules.novel_next_page_selector,
+            n_novel_rules.novel_name_selector
+    </sql>
+    <select id="findNovelRulesList" resultMap="novelRules">
+        <include refid="novel" /> FROM `n_novel_rules`
+    </select>
+
+</mapper>

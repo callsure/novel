@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+
+    <!-- 注解支持 -->
+    <context:annotation-config />
+    <!-- 自动扫描 -->
+    <context:component-scan base-package="com.novel" />
+    <!-- 引入配置文件 -->
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:jdbc.properties" />
+    </bean>
+
+    <!-- 配置防御SQL注入攻击 -->
+    <bean id="wall-filter-config" class="com.alibaba.druid.wall.WallConfig" init-method="init">
+        <!--指定配置装载的目录  -->
+        <property name="dir" value="META-INF/druid/wall/mysql" />
+        <!--<property name="deleteWhereAlwayTrueCheck" value="false"/>-->
+        <!--<property name="updateWhereAlayTrueCheck" value="false"/>-->
+        <!--<property name="objectCheck" value="false"/>-->
+        <!--<property name="variantCheck" value="false"/>-->
+        <!--<property name="functionCheck" value="false"/>-->
+        <!--<property name="commentAllow" value="true"/>-->
+        <!--<property name="multiStatementAllow" value="true"/>-->
+        <!--<property name="truncateAllow" value="true"/>-->
+        <!--<property name="selectUnionCheck" value="false"/>-->
+        <!--<property name="alterTableAllow" value="true"/>-->
+        <!--<property name="noneBaseStatementAllow" value="true"/>-->
+        <!--<property name="schemaCheck" value="false"/>-->
+        <!--<property name="dropTableAllow" value="true"/>-->
+    </bean>
+
+    <bean id="wall-filter" class="com.alibaba.druid.wall.WallFilter">
+        <property name="dbType" value="mysql" />
+        <property name="config" ref="wall-filter-config" />
+    </bean>
+
+    <bean id="log-filter" class="com.alibaba.druid.filter.logging.Log4jFilter">
+        <property name="resultSetLogEnabled" value="false" />
+        <property name="statementExecutableSqlLogEnable" value="true" />
+    </bean>
+
+
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+          init-method="init" destroy-method="close">
+        <property name="driverClassName" value="${driver}" />
+        <property name="url" value="${url}" />
+        <property name="username" value="${username}" />
+        <property name="password" value="${password}" />
+        <!-- 初始化连接大小 -->
+        <property name="initialSize" value="${initialSize}"></property>
+        <!-- 连接池最大数量 -->
+        <property name="maxActive" value="${maxActive}"></property>
+        <!-- 连接池最小空闲 -->
+        <property name="minIdle" value="${minIdle}"></property>
+        <!-- 获取连接最大等待时间 -->
+        <property name="maxWait" value="${maxWait}"></property>
+
+        <!-- 验证数据库连接的有效性 -->
+        <property name="validationQuery" value="${validationQuery}" />
+        <!-- 申请连接时执行validationQuery检测连接是否有效, 做了这个配置会降低性能 -->
+        <property name="testOnBorrow" value="false" />
+        <!-- 归还连接时执行validationQuery检测连接是否有效, 做了这个配置会降低性能 -->
+        <property name="testOnReturn" value="false" />
+        <!-- 建议配置为true,不影响性能,并且保证安全性.申请连接的时候检测,如果空闲时间大于 timeBetweenEvictionRunsMillis，
+            执行validationQuery检测连接是否有效 -->
+        <property name="testWhileIdle" value="true" />
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="25200000" />
+
+        <!-- removeAbandoned,removeAbandonedTimeout,logAbandoned是连接池的高级功能, 理论上这些配置不应该出现在实际的生产环境 -->
+        <!-- 打开removeAbandoned功能,设定一种机制,当程序编写者在从连接池中获取连接使用后忘记了连接的关闭,当连接池连接数到达某个数量时,会启动连接回收 -->
+        <property name="removeAbandoned" value="true" />
+        <!-- 活动时间超过removeAbandonedTimeout="1800"(30分钟)的连接将会被回收 -->
+        <property name="removeAbandonedTimeout" value="1800" />
+        <!--程序在回收连接的同时会打印日志 -->
+        <property name="logAbandoned" value="true" />
+
+        <!-- 监控数据库 -->
+        <property name="filters" value="stat,wall,config" />
+        <property name="connectionProperties" value="config.decrypt=true;config.decrypt.key=${publicKey}" />
+
+        <property name="proxyFilters">
+            <list>
+                <ref bean="wall-filter"/>
+                <ref bean="log-filter"/>
+            </list>
+        </property>
+    </bean>
+
+    <!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <!-- 自动扫描mapping.xml文件 -->
+        <property name="mapperLocations">
+            <list>
+                <value>classpath:mapping/*Mapper.xml</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory" />
+    </bean>
+
+    <!-- DAO接口所在包名，Spring会自动查找其下的类 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.novel.mapper" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+    </bean>
+
+    <!-- 配置任务线性池 -->
+    <task:executor id="executor" pool-size="3" />
+    <task:scheduler id="scheduler" pool-size="3" />
+    <!-- 开启这个配置，spring才能识别@Scheduled注解   -->
+    <task:annotation-driven scheduler="scheduler" executor="executor" proxy-target-class="true"/>
+
+    <!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <bean class="com.novel.utils.SpringContextManager"/>
+
+    <!-- ehcache 的配置   缓存管理器  -->
+    <bean id="cacheManagerFactor" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="configLocation">
+            <value>classpath:ehcache/ehcache.xml</value>
+        </property>
+    </bean>
+    <!--<import resource="classpath:motan-server/motan-server.xml"/>-->
+    <!--<import resource="classpath:motan-client/motan-client.xml"/>-->
+
+</beans>
