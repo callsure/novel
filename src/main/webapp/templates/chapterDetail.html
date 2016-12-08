@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>汐灵书院</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link href="../static/dist/css/bootstrap.min.css" rel="stylesheet" th:href="@{/static/dist/css/bootstrap.min.css}"/>
+    <link href="../static/css/chapterDetail.css" rel="stylesheet" th:href="@{/static/css/chapterDetail.css}"/>
+    <link rel="shortcut icon" href="../static/icon/book.ico" th:href="@{/static/icon/book.ico}" />
+    <script src="../static/js/jquery-3.1.0.min.js" th:src="@{/static/js/jquery-3.1.0.min.js}"></script>
+    <script src="../static/dist/js/bootstrap.min.js" th:src="@{/static/dist/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div class="book container-fluid">
+    <div class="title row">
+        <div class="link col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="row">
+                <a href="/" class="left text-center col-xs-2 col-sm-2 col-md-2 col-lg-2" th:href="@{/}">首页</a>
+                <span class="center text-center col-xs-6 col-sm-8 col-md-8 col-lg-9" th:text="${novel.nName}">
+                    书名
+                </span>
+                <a href="javascript:void(0);" class="right text-center col-xs-2 col-sm-2 col-md-2 col-lg-1">反馈</a>
+            </div>
+        </div>
+    </div>
+    <div class="chapter text-center" th:text="${chapterDetail.title}">
+        第1章 XXXX
+    </div>
+    <div class="content" th:utext="${chapterDetail.content}">
+
+    </div>
+    <div class="botm row text-center">
+        <a href="javascript:void(0);" class="btn small" th:if="${chapterDetail.prev ne novel.nUrl}" th:with="prevUrl = '/chapterDetail/' + ${novel.nId} + '/' + ${chapterDetail.countIndex + 1}" th:href="@{${prevUrl}(url=${chapterDetail.prev})}">上一章</a>
+        <!--<a href="javascript:void(0);" class="btn" onclick="bookStore(14,'大主宰');">加入书架</a>-->
+        <a href="javascript:void(0);" class="btn" th:with="baseUrl = '/chapter/' + ${novel.nId}" th:href="@{${baseUrl}}">章节列表</a>
+        <a href="javascript:void(0);" class="btn small" th:if="${chapterDetail.next ne novel.nUrl}" th:with="nextUrl = '/chapterDetail/' + ${novel.nId} + '/' + ${chapterDetail.countIndex - 1}" th:href="@{${nextUrl}(url=${chapterDetail.next})}">下一章</a>
+    </div>
+</div>
+</body>
+</html>

@@ -14,6 +14,11 @@
     from n_class
     where n_type_id = #{nTypeId,jdbcType=INTEGER}
   </select>
+  <select id="getsNclassAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from n_class
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from n_class
     where n_type_id = #{nTypeId,jdbcType=INTEGER}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>汐灵书院</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link href="../static/dist/css/bootstrap.min.css" rel="stylesheet" th:href="@{/static/dist/css/bootstrap.min.css}"/>
+    <link href="../static/css/chapter.css" rel="stylesheet" th:href="@{/static/css/chapter.css}"/>
+    <link rel="shortcut icon" href="../static/icon/book.ico" th:href="@{/static/icon/book.ico}" />
+    <script src="../static/js/jquery-3.1.0.min.js" th:src="@{/static/js/jquery-3.1.0.min.js}"></script>
+    <script src="../static/dist/js/bootstrap.min.js" th:src="@{/static/dist/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div class="book container-fluid">
+    <div class="title row">
+        <div class="link col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="row">
+                <a href="/" class="left text-center col-xs-2 col-sm-2 col-md-2 col-lg-2" th:href="@{/}">首页</a>
+                <span class="center text-center col-xs-6 col-sm-8 col-md-8 col-lg-9" th:text="${novel.nName}">
+                    书名
+                </span>
+                <a href="javascript:void(0);" class="right text-center col-xs-2 col-sm-2 col-md-2 col-lg-1">反馈</a>
+            </div>
+        </div>
+    </div>
+    <div class="desc row">
+        <div class="summary col-xs-12 col-sm-12 col-md-12 col-lg-12" th:text="'简介：' + ${novel.nDesc}">简介：</div>
+        <div class="info col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="row">
+                <span class="col-xs-9 col-sm-8 col-md-8 col-lg-8">
+                    作者: <a href="/search?q=天蚕土豆" class="author" th:text="${novel.nAuthor}">XX</a>
+                </span>
+                <span class="col-xs-1 col-sm-2 col-md-2 col-lg-2">
+                    <a href="javascript:void(0);" class="btn pull-right" onclick="javascript:document.getElementsByTagName('body')[0].scrollTop=document.getElementsByTagName('body')[0].scrollHeight;">底部</a>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="catalog row">
+        <th:block th:each="chapter,index:${chapters}">
+            <a class="col-xs-12 col-sm-6 col-md-4 col-lg-4" href="/" th:with="url = '/chapterDetail/' + ${novel.nId} + '/' + ${index.size - index.count + 1}" th:href="@{${url}(url=${chapter.url})}">
+                <span th:text="${chapter.title}">第一章 XXX</span>
+            </a>
+        </th:block>
+    </div>
+    <div class="botm row text-center">
+        <a href="/" class="btn small" th:href="@{/}">返回</a>
+        <!--<a href="javascript:void(0);" class="btn" onclick="bookStore(14,'大主宰');">加入书架</a>-->
+        <a href="javascript:void(0);" class="btn">加入书架</a>
+        <a href="javascript:void(0);" class="btn small" onclick="javascript:document.getElementsByTagName('body')[0].scrollTop=0;">顶部</a>
+    </div>
+</div>
+</body>
+</html>

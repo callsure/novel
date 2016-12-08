@@ -7,7 +7,7 @@ import net.sf.ehcache.Element;
 /**
  * 缓存管理器
  *
- * @author callsure
+ * @author linrunshu
  */
 public class EHcacheUtil {
 	private static EHcacheUtil ehcacheUtil;
@@ -64,6 +64,13 @@ public class EHcacheUtil {
 	 */
 	public void remove(String key) {
 		cache.remove(key);
+	}
+
+	/**
+	 * 清除所有缓存
+	 */
+	public void cleanAll() {
+		cache.removeAll();
 	}
 
 }

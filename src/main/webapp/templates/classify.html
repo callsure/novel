@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>汐灵书院</title>
+    <link href="../static/css/main.css" rel="stylesheet" th:href="@{/static/css/main.css}"/>
+    <link href="../static/css/classify.css" rel="stylesheet" th:href="@{/static/css/classify.css}"/>
+    <link rel="shortcut icon" href="../static/icon/book.ico" th:href="@{/static/icon/book.ico}" />
+</head>
+<body>
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <ul class="content list-unstyled">
+            <li>
+                <span class="theme bg" th:text="${typeNme}">热门</span>
+            </li>
+            <th:block th:each="novel,index:${novels}">
+                <li>
+                    <div class="cp">
+                        <span class="stars stars-0"></span>
+                        <p class="num" th:text="${novel.nBrowse}">31</p>
+                        <p>浏览</p>
+                    </div>
+                    <div class="cont">
+                        <a href="javascript:void(0);" class="title" th:href="@{/}+'chapter/'+${novel.nId}" th:text="${novel.nName}">元气少年</a>
+                        <div class="info" th:text="${novel.nAuthor}+' / '+${novel.nType}+' / '+(${novel.nStatus == 1}? '连载中' : '完结')">
+                            张君宝/都市/连载中
+                        </div>
+                        <p class="intro">
+                            <img src="../static/images/new.png" alt="" th:src="@{/static/images/new.png}"/>
+                            <a href="javascript:void(0);" th:with="lastUrl = '/chapterDetail/' + ${novel.nId} + '/1'" th:href="@{${lastUrl}(url=${novel.nLastUpdateChapterUrl})}" th:text="${novel.nLastUpdateChapter}">第240章 我帮你磨墨</a>
+                        </p>
+                        <p class="intro" th:text="${novel.nDesc}">平庸懦弱的学生宋保军，意外觉醒体内潜伏的三十二重人格，人生从此开挂，一步步逆袭登上巅峰王者的热血励志故事。有香车美女，也有颠倒黑白的口才，更有热血爆棚的打斗……</p>
+                    </div>
+                </li>
+            </th:block>
+        </ul>
+    </div>
+    <div id="page" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+        <!--totalPage 小于等于 5 或者 totalPage大于5并且当前页小于等于3-->
+        <div class="laypage_main laypageskin_default" th:with="lPage = ${lastPage > 5}? 5 : ${lastPage}, fPage = 1" th:if="${totalPage <= 5} or (${(totalPage > 5 and currPage <= 3)})">
+            <a href="javascript:void(0);" class="laypage_prev" th:onclick="'loadMain(\'' + @{/} + ${path} + ${currPage - 1} + '\');'" th:if="${hasFirstPage}">上一页</a>
+            <th:block th:each="i:${#numbers.sequence(fPage,lPage)}">
+                <span class="laypage_curr" th:if="${currPage} eq ${i}" th:text="${i}">1</span>
+                <a href="javascript:void(0);" th:if="${currPage} ne ${i}" th:onclick="'loadMain(\'' + @{/} + ${path} + ${i} + '\');'" th:text="${i}">1</a>
+            </th:block>
+            <a href="javascript:void(0);" class="laypage_next" th:onclick="'loadMain(\'' + @{/} + ${path} + ${currPage + 1} + '\');'" th:if="${hasNextPage}">下一页</a>
+        </div>
+        <!--totalPage 大于 5 或者 totalPage大于5并且当前页大于3并且当前页小于totalPage-2-->
+        <div class="laypage_main laypageskin_default" th:with="lPage = ${currPage + 2}, fPage = ${currPage - 2}" th:if="${(totalPage > 5 and currPage > 3 and lastPage > (currPage + 2))}">
+            <a href="javascript:void(0);" class="laypage_prev" th:onclick="'loadMain(\'' + @{/} + ${path} + ${currPage - 1} + '\');'" th:if="${hasFirstPage}">上一页</a>
+            <th:block th:each="i:${#numbers.sequence(fPage,lPage)}">
+                <span class="laypage_curr" th:if="${currPage} eq ${i}" th:text="${i}">1</span>
+                <a href="javascript:void(0);" th:if="${currPage} ne ${i}" th:onclick="'loadMain(\'' + @{/} + ${path} + ${i} + '\');'" th:text="${i}">1</a>
+            </th:block>
+            <a href="javascript:void(0);" class="laypage_next" th:onclick="'loadMain(\'' + @{/} + ${path} + ${currPage + 1} + '\');'" th:if="${hasNextPage}">下一页</a>
+        </div>
+        <!--totalPage 大于 5 并且 当前页 + 2 大于等于 totalPage-->
+        <div class="laypage_main laypageskin_default" th:with="lPage = ${lastPage}, fPage = ${lastPage - 5}" th:if="${(totalPage > 5 and currPage + 2 >= lastPage)}">
+            <a href="javascript:void(0);" class="laypage_prev" th:onclick="'loadMain(\'' + @{/} + ${path} + ${currPage - 1} + '\');'" th:if="${hasFirstPage}">上一页</a>
+            <th:block th:each="i:${#numbers.sequence(fPage,lPage)}">
+                <span class="laypage_curr" th:if="${currPage} eq ${i}" th:text="${i}">1</span>
+                <a href="javascript:void(0);" th:if="${currPage} ne ${i}" th:onclick="'loadMain(\'' + @{/} + ${path} + ${i} + '\');'" th:text="${i}">1</a>
+            </th:block>
+            <a href="javascript:void(0);" class="laypage_next" th:onclick="'loadMain(\'' + @{/} + ${path} + ${currPage + 1} + '\');'" th:if="${hasNextPage}">下一页</a>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

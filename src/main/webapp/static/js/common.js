@@ -1,9 +1,10 @@
 //加载top页面
 function init() {
-    loadMain();
-    window.scrollTo(0,0);
+    loadMain("main");
 }
 
-function loadMain() {
-    $("#main").load("main");
+function loadMain(path) {
+    $("#main").load(path,function (data) {
+        window.scrollTo(0,0);
+    });
 }

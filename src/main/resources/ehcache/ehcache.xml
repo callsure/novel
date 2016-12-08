@@ -25,11 +25,11 @@
                  <!--timeToIdleSeconds="300"-->
                  <!--timeToLiveSeconds="600"-->
                  <!--diskExpiryThreadIntervalSeconds="120" />-->
-        <cache name="novelChapter"
+        <cache  name="novelChapter"
         		 maxElementsInMemory="10000"
 				 eternal="false" 
-				 timeToIdleSeconds="0"
-				 timeToLiveSeconds="0"
+				 timeToIdleSeconds="300"
+				 timeToLiveSeconds="600"
 				 overflowToDisk="true" />
 		  <!-- sessioncache -->
          <!-- <cache name="shiro-activeSessionCache"  

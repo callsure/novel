@@ -11,13 +11,15 @@
     <result column="n_add_time" property="nAddTime" jdbcType="TIMESTAMP" />
     <result column="site_id" property="siteId" jdbcType="INTEGER" />
     <result column="n_status" property="nStatus" jdbcType="INTEGER" />
-    <result column="n_last_chapter" property="nLastChapter" jdbcType="VARCHAR" />
-    <result column="n_last_chapter_url" property="nLastChapterUrl" jdbcType="VARCHAR" />
+    <result column="n_last_update_chapter" property="nLastUpdateChapter" jdbcType="VARCHAR" />
+    <result column="n_last_update_chapter_url" property="nLastUpdateChapterUrl" jdbcType="VARCHAR" />
+    <result column="n_last_update_time" property="nLastUpdateTime" jdbcType="TIMESTAMP" />
     <result column="n_browse" property="nBrowse" jdbcType="INTEGER" />
+    <result column="first_letter" property="firstLetter" jdbcType="CHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    n_id, n_name, n_author, n_url, n_type, n_desc, n_add_time, site_id, n_status, n_last_chapter, 
-    n_last_chapter_url, "n_browse"
+    n_id, n_name, n_author, n_url, n_type, n_desc, n_add_time, site_id, n_status, n_last_update_chapter, 
+    n_last_update_chapter_url, n_last_update_time, n_browse, first_letter
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -26,8 +28,49 @@
     where n_id = #{nId,jdbcType=INTEGER}
   </select>
   <select id="getsNovelByType" parameterType="string" resultMap="BaseResultMap">
-    select n_id, n_name, n_author, n_url, n_type,n_add_time, site_id, n_status,n_last_chapter,n_browse,
-    n_last_chapter_url from v_novel where n_type = #{type} order by n_browse
+    select
+    n_id, n_name, n_author, n_url, n_class.n_type_name as n_type, n_desc, n_add_time, site_id, n_status, n_last_update_chapter,
+    n_last_update_chapter_url, n_last_update_time, n_browse, first_letter
+    from t_novel
+    inner join n_class on n_class.n_type_id = t_novel.n_type
+    where t_novel.n_type = #{type} order by n_browse
+  </select>
+  <select id="getsNovelAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_novel where n_desc is null and site_id = 1018 limit 2500
+  </select>
+  <select id="getHotNovelAllType" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    <choose>
+      <when test="typeId == 1">
+        from v_type_view_1
+      </when>
+      <when test="typeId == 2">
+        from v_type_view_2
+      </when>
+      <when test="typeId == 3">
+        from v_type_view_3
+      </when>
+      <when test="typeId == 4">
+        from v_type_view_4
+      </when>
+      <when test="typeId == 5">
+        from v_type_view_5
+      </when>
+      <when test="typeId == 6">
+        from v_type_view_6
+      </when>
+      <when test="typeId == 7">
+        from v_type_view_7
+      </when>
+      <otherwise>
+        from v_type_view_8
+      </otherwise>
+    </choose>
+    where site_id = #{siteId}
+    limit 5
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_novel
@@ -37,12 +80,14 @@
     insert into t_novel (n_id, n_name, n_author, 
       n_url, n_type, n_desc, 
       n_add_time, site_id, n_status, 
-      n_last_chapter, n_last_chapter_url, "n_browse"
+      n_last_update_chapter, n_last_update_chapter_url, 
+      n_last_update_time, n_browse, first_letter
       )
     values (#{nId,jdbcType=INTEGER}, #{nName,jdbcType=VARCHAR}, #{nAuthor,jdbcType=VARCHAR}, 
-      #{nUrl,jdbcType=VARCHAR}, #{nType,jdbcType=VARCHAR}, #{nDesc,jdbcType=VARCHAR}, 
+      #{nUrl,jdbcType=VARCHAR}, #{nType,jdbcType=VARCHAR}, #{nDesc,jdbcType=VARCHAR},
       #{nAddTime,jdbcType=TIMESTAMP}, #{siteId,jdbcType=INTEGER}, #{nStatus,jdbcType=INTEGER}, 
-      #{nLastChapter,jdbcType=VARCHAR}, #{nLastChapterUrl,jdbcType=VARCHAR}, #{nBrowse,jdbcType=INTEGER}
+      #{nLastUpdateChapter,jdbcType=VARCHAR}, #{nLastUpdateChapterUrl,jdbcType=VARCHAR}, 
+      #{nLastUpdateTime,jdbcType=TIMESTAMP}, #{nBrowse,jdbcType=INTEGER}, #{firstLetter,jdbcType=CHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.novel.entitys.Tnovel" >
@@ -75,14 +120,20 @@
       <if test="nStatus != null" >
         n_status,
       </if>
-      <if test="nLastChapter != null" >
-        n_last_chapter,
+      <if test="nLastUpdateChapter != null" >
+        n_last_update_chapter,
       </if>
-      <if test="nLastChapterUrl != null" >
-        n_last_chapter_url,
+      <if test="nLastUpdateChapterUrl != null" >
+        n_last_update_chapter_url,
+      </if>
+      <if test="nLastUpdateTime != null" >
+        n_last_update_time,
       </if>
       <if test="nBrowse != null" >
-        "n_browse",
+        n_browse,
+      </if>
+      <if test="firstLetter != null" >
+        first_letter,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -113,14 +164,20 @@
       <if test="nStatus != null" >
         #{nStatus,jdbcType=INTEGER},
       </if>
-      <if test="nLastChapter != null" >
-        #{nLastChapter,jdbcType=VARCHAR},
+      <if test="nLastUpdateChapter != null" >
+        #{nLastUpdateChapter,jdbcType=VARCHAR},
       </if>
-      <if test="nLastChapterUrl != null" >
-        #{nLastChapterUrl,jdbcType=VARCHAR},
+      <if test="nLastUpdateChapterUrl != null" >
+        #{nLastUpdateChapterUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="nLastUpdateTime != null" >
+        #{nLastUpdateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="nBrowse != null" >
         #{nBrowse,jdbcType=INTEGER},
+      </if>
+      <if test="firstLetter != null" >
+        #{firstLetter,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -151,14 +208,20 @@
       <if test="nStatus != null" >
         n_status = #{nStatus,jdbcType=INTEGER},
       </if>
-      <if test="nLastChapter != null" >
-        n_last_chapter = #{nLastChapter,jdbcType=VARCHAR},
+      <if test="nLastUpdateChapter != null" >
+        n_last_update_chapter = #{nLastUpdateChapter,jdbcType=VARCHAR},
       </if>
-      <if test="nLastChapterUrl != null" >
-        n_last_chapter_url = #{nLastChapterUrl,jdbcType=VARCHAR},
+      <if test="nLastUpdateChapterUrl != null" >
+        n_last_update_chapter_url = #{nLastUpdateChapterUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="nLastUpdateTime != null" >
+        n_last_update_time = #{nLastUpdateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="nBrowse != null" >
-        "n_browse" = #{nBrowse,jdbcType=INTEGER},
+        n_browse = #{nBrowse,jdbcType=INTEGER},
+      </if>
+      <if test="firstLetter != null" >
+        first_letter = #{firstLetter,jdbcType=CHAR},
       </if>
     </set>
     where n_id = #{nId,jdbcType=INTEGER}
@@ -173,9 +236,23 @@
       n_add_time = #{nAddTime,jdbcType=TIMESTAMP},
       site_id = #{siteId,jdbcType=INTEGER},
       n_status = #{nStatus,jdbcType=INTEGER},
-      n_last_chapter = #{nLastChapter,jdbcType=VARCHAR},
-      n_last_chapter_url = #{nLastChapterUrl,jdbcType=VARCHAR},
-      "n_browse" = #{nBrowse,jdbcType=INTEGER}
+      n_last_update_chapter = #{nLastUpdateChapter,jdbcType=VARCHAR},
+      n_last_update_chapter_url = #{nLastUpdateChapterUrl,jdbcType=VARCHAR},
+      n_last_update_time = #{nLastUpdateTime,jdbcType=TIMESTAMP},
+      n_browse = #{nBrowse,jdbcType=INTEGER},
+      first_letter = #{firstLetter,jdbcType=CHAR}
     where n_id = #{nId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByNameAndAuthor" parameterType="com.novel.beans.NovelDesc">
+    update t_novel
+    set n_desc  = #{desc,jdbcType=VARCHAR}
+    where n_name = #{novelName,jdbcType=VARCHAR}
+    and n_author = #{novelAuthor,jdbcType=VARCHAR}
+    and site_id = #{siteId,jdbcType=INTEGER}
+  </update>
+  <update id="updateNovelChapter">
+    <![CDATA[
+    {call NOVEL_DATA_UPDATE()}
+    ]]>
   </update>
 </mapper>

@@ -18,6 +18,8 @@
         <result property="novelSelector" column="novel_selector"/>
         <result property="novelNextPageSelector" column="novel_next_page_selector"/>
         <result property="novelNameSelector" column="novel_name_selector"/>
+        <result property="novelDescSelector" column="novel_desc_selector"/>
+        <result property="novelAuthorSelector" column="novel_author_selector"/>
     </resultMap>
 
     <sql id="novel">
@@ -34,7 +36,9 @@
             n_novel_rules.detail_next_selector,
             n_novel_rules.novel_selector,
             n_novel_rules.novel_next_page_selector,
-            n_novel_rules.novel_name_selector
+            n_novel_rules.novel_name_selector,
+            n_novel_rules.novel_desc_selector,
+            n_novel_rules.novel_author_selector
     </sql>
     <select id="findNovelRulesList" resultMap="novelRules">
         <include refid="novel" /> FROM `n_novel_rules`

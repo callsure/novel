@@ -27,14 +27,9 @@
     <div class="toolbar row">
         <ul class="list-inline">
             <li><a href="/templates/index.html" th:href="@{/}">首页</a></li>
-            <li><a href="/templates/index.html" th:href="@{/}">玄幻奇幻</a></li>
-            <li><a href="/templates/index.html" th:href="@{/}">武侠修真</a></li>
-            <li><a href="/templates/index.html" th:href="@{/}">都市言情</a></li>
-            <li><a href="/templates/index.html" th:href="@{/}">历史穿越</a></li>
-            <li><a href="/templates/index.html" th:href="@{/}">网游小说</a></li>
-            <li><a href="/templates/index.html" th:href="@{/}">科幻小说</a></li>
-            <li><a href="/templates/index.html" th:href="@{/}">恐怖灵异</a></li>
-            <li><a href="/templates/index.html" th:href="@{/}">其他类型</a></li>
+            <th:block th:each="item,index:${classes}">
+                <li><a href="/templates/index.html" th:href="'javascript:void(0);'" th:onclick="'loadMain(\'' + @{'/classify/'+${item.nTypeId}+'-1'}+'\');'" th:text="${item.nTypeName}"></a></li>
+            </th:block>
         </ul>
     </div>
     <div id="center" class="row text-center">
@@ -73,7 +68,7 @@
                     , All rights reserved。
                 </p>
                 <p>
-                    小说最新章节转载自网上，仅供书友试读，请书友支持正版，支持作者，试读后觉得不错，前往首发站点购买阅读。如有侵犯请来信告知，本站立即予以处理。反馈邮箱：chost@126.com
+                    小说最新章节转载自网上，仅供书友试读，请书友支持正版，支持作者，试读后觉得不错，前往首发站点购买阅读。如有侵犯请来信告知，本站立即予以处理。反馈邮箱：linrunshu@126.com
                 </p>
             </div>
         </div>

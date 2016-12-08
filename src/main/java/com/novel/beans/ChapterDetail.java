@@ -18,6 +18,9 @@ public class ChapterDetail implements Serializable {
 
 	private String next;
 
+	//标记是在哪一章节
+	private Integer countIndex;
+
 	public String getTitle() {
 		return title;
 	}
@@ -48,6 +51,14 @@ public class ChapterDetail implements Serializable {
 
 	public void setNext(String next) {
 		this.next = next;
+	}
+
+	public Integer getCountIndex() {
+		return countIndex;
+	}
+
+	public void setCountIndex(Integer countIndex) {
+		this.countIndex = countIndex;
 	}
 
 	@Override
