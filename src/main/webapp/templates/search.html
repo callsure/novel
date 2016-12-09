@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>汐灵书院</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link href="../static/dist/css/bootstrap.min.css" rel="stylesheet" th:href="@{/static/dist/css/bootstrap.min.css}"/>
+    <link href="../static/css/top.css" rel="stylesheet" th:href="@{/static/css/top.css}"/>
+    <link href="../static/css/foot.css" rel="stylesheet" th:href="@{/static/css/foot.css}"/>
+    <link href="../static/css/main.css" rel="stylesheet" th:href="@{/static/css/main.css}"/>
+    <link href="../static/css/search.css" rel="stylesheet" th:href="@{/static/css/search.css}"/>
+    <link rel="shortcut icon" href="../static/icon/book.ico" th:href="@{/static/icon/book.ico}" />
+    <script src="../static/js/jquery-3.1.0.min.js" th:src="@{/static/js/jquery-3.1.0.min.js}"></script>
+    <script src="../static/dist/js/bootstrap.min.js" th:src="@{/static/dist/js/bootstrap.min.js}"></script>
+    <script src="../static/js/common.js" th:src="@{/static/js/common.js}"></script>
+</head>
+<body>
+<!-- head -->
+<div id="top" class="container-fluid">
+    <h1><div class="brand"><img src="../static/images/book.png" th:src="@{/static/images/book.png}" alt="汐灵书院,小说阅读网"/>汐灵书院</div></h1>
+    <div class="toolbar row">
+        <ul class="list-inline">
+            <li><a href="/templates/index.html" th:href="@{/}">首页</a></li>
+            <th:block th:each="item,index:${nclasses}">
+                <li><a href="/templates/index.html" th:href="'javascript:void(0);'" th:onclick="'loadMain(\'' + @{'/classify/'+${item.nTypeId}+'-1'}+'\');'" th:text="${item.nTypeName}"></a></li>
+            </th:block>
+        </ul>
+    </div>
+    <div id="center" class="row text-center">
+        <div class="last col-xs-12 col-sm-8 col-md-7 col-lg-7">
+            <img src="../static/images/book_open.png" th:src="@{/static/images/book_open.png}">
+            <a href="">最后阅读:[元气少年]第240章 我帮你磨墨帮你磨墨帮你磨墨</a>
+        </div>
+        <div class="search col-xs-12 col-sm-4 col-md-5 col-lg-5">
+            <div class="row">
+                <input type="text" id="search" class="form-control col-sm-2" placeholder="书名/作者">
+                <button type="button" class="btn btn-success col-sm-2" th:with="surl = @{/search(p=1 ,q='')}" th:onclick="'search(\''+${surl}+'\');'">搜索</button>
+            </div>
+            <!--<input type="text" id="search" value="" placeholder="书名/作者">-->
+            <!--<a href="javascript:void (0);" class="btn-search" id="btn-search">搜索</a>-->
+        </div>
+    </div>
+</div>
+
+<!-- body -->
+<div id="main" class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <span class="theme bg">搜索结果</span>
+            <ul class="content list-unstyled">
+                <th:block th:if="${#lists.size(novels) &gt; 0}" th:each="novel,index:${novels}">
+                    <li>
+                        <div class="cp">
+                            <span class="stars stars-0"></span>
+                            <p class="num" th:text="${novel.nBrowse}">31</p>
+                            <p>浏览</p>
+                        </div>
+                        <div class="cont">
+                            <a href="javascript:void(0);" class="title" th:href="@{/}+'chapter/'+${novel.nId}" th:text="${novel.nName}">元气少年</a>
+                            <div class="info" th:text="${novel.nAuthor}+' / '+${novel.nType}+' / '+(${novel.nStatus == 1}? '连载中' : '完结')">
+                                张君宝/都市/连载中
+                            </div>
+                            <p class="intro">
+                                <img src="../static/images/new.png" alt="" th:src="@{/static/images/new.png}"/>
+                                <a href="javascript:void(0);" th:with="lastUrl = '/chapterDetail/' + ${novel.nId} + '/1'" th:href="@{${lastUrl}(url=${novel.nLastUpdateChapterUrl})}" th:text="${novel.nLastUpdateChapter}">第240章 我帮你磨墨</a>
+                            </p>
+                            <p class="intro" th:text="${novel.nDesc}">平庸懦弱的学生宋保军，意外觉醒体内潜伏的三十二重人格，人生从此开挂，一步步逆袭登上巅峰王者的热血励志故事。有香车美女，也有颠倒黑白的口才，更有热血爆棚的打斗……</p>
+                        </div>
+                    </li>
+                </th:block>
+            </ul>
+        </div>
+        <div id="page" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center" th:id="page" th:if="${#lists.size(novels) &gt; 0}">
+            <!--totalPage 小于等于 5 或者 totalPage大于5并且当前页小于等于3-->
+            <div class="laypage_main laypageskin_default" th:with="lPage = ${lastPage > 5}? 5 : ${lastPage}, fPage = 1" th:if="${totalPage <= 5} or (${(totalPage > 5 and currPage <= 3)})">
+                <a href="javascript:void(0);" class="laypage_prev" th:with="prevUrl = @{/search/(p=${currPage - 1},q=${query})}" th:href="${prevUrl}" th:if="${hasFirstPage}">上一页</a>
+                <th:block th:each="i:${#numbers.sequence(fPage,lPage)}">
+                    <span class="laypage_curr" th:if="${currPage} eq ${i}" th:text="${i}">1</span>
+                    <a href="javascript:void(0);" th:if="${currPage} ne ${i}" th:with="currUrl = @{/search/(p=${i},q=${query})}" th:href="${currUrl}" th:text="${i}">1</a>
+                </th:block>
+                <a href="javascript:void(0);" class="laypage_next" th:with="nextUrl = @{/search/(p=${currPage + 1},q=${query})}" th:href="${nextUrl}" th:if="${hasNextPage}">下一页</a>
+            </div>
+
+            <!--totalPage 大于 5 或者 totalPage大于5并且当前页大于3并且当前页小于totalPage-2-->
+            <div class="laypage_main laypageskin_default" th:with="lPage = ${currPage + 2}, fPage = ${currPage - 2}" th:if="${(totalPage > 5 and currPage > 3 and lastPage > (currPage + 2))}">
+                <a href="javascript:void(0);" class="laypage_prev" th:with="prevUrl = @{/search/(p=${currPage - 1},q=${query})}" th:href="${prevUrl}" th:if="${hasFirstPage}">上一页</a>
+                <th:block th:each="i:${#numbers.sequence(fPage,lPage)}">
+                    <span class="laypage_curr" th:if="${currPage} eq ${i}" th:text="${i}">1</span>
+                    <a href="javascript:void(0);" th:if="${currPage} ne ${i}" th:with="currUrl = @{/search/(p=${i},q=${query})}" th:href="${currUrl}" th:text="${i}">1</a>
+                </th:block>
+                <a href="javascript:void(0);" class="laypage_next" th:with="nextUrl = @{/search/(p=${currPage + 1},q=${query})}" th:href="${nextUrl}" th:if="${hasNextPage}">下一页</a>
+            </div>
+
+            <!--totalPage 大于 5 并且 当前页 + 2 大于等于 totalPage-->
+            <div class="laypage_main laypageskin_default" th:with="lPage = ${lastPage}, fPage = ${lastPage - 5}" th:if="${(totalPage > 5 and currPage + 2 >= lastPage)}">
+                <a href="javascript:void(0);" class="laypage_prev" th:with="prevUrl = @{/search/(p=${currPage - 1},q=${query})}" th:href="${prevUrl}" th:if="${hasFirstPage}">上一页</a>
+                <th:block th:each="i:${#numbers.sequence(fPage,lPage)}">
+                    <span class="laypage_curr" th:if="${currPage} eq ${i}" th:text="${i}">1</span>
+                    <a href="javascript:void(0);" th:if="${currPage} ne ${i}" th:with="currUrl = @{/search/(p=${i},q=${query})}" th:href="${currUrl}" th:text="${i}">1</a>
+                </th:block>
+                <a href="javascript:void(0);" class="laypage_next" th:with="nextUrl = @{/search/(p=${currPage + 1},q=${query})}" th:href="${nextUrl}" th:if="${hasNextPage}">下一页</a>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center" th:id="page" th:if="${#lists.size(novels) eq 0}">
+            哎哎,没有找到数据,请反馈至linrunshu@126.com邮箱...
+        </div>
+    </div>
+</div>
+
+<!-- foot -->
+<div id="foot" class="container-fluid">
+    <div class="row">
+        <div class="footlink col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="md text-left">
+                友情链接：
+                <a href="http://www.healing.vicp.net/" target="汐灵书院" th:href="@{/}">汐灵书院</a>
+                <a href="http://www.kanshuzhong.com/" target="_blank">看书中</a>
+            </div>
+        </div>
+        <div class="footcopy col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="cp">
+                <p>
+                    Copyright © 2016
+                    <a href="http://www.healing.vicp.net" th:href="@{/}">汐灵书院</a>
+                    , All rights reserved。
+                </p>
+                <p>
+                    小说最新章节转载自网上，仅供书友试读，请书友支持正版，支持作者，试读后觉得不错，前往首发站点购买阅读。如有侵犯请来信告知，本站立即予以处理。反馈邮箱：linrunshu@126.com
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

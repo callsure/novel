@@ -27,6 +27,12 @@ public class TnovelServiceImpl implements TnovelService {
 		return tnovelMapper.selectByPrimaryKey(nId);
 	}
 
+	/**
+	 * 获取首页的所有类型的前五条数据
+	 * @param siteId
+	 * @param nclasses
+	 * @return
+	 */
 	@Override
 	public List<Tnovel> getHotNovelAllType(Integer siteId, List<Nclass> nclasses) {
 		List<Tnovel> datas = new ArrayList<>();
@@ -48,6 +54,18 @@ public class TnovelServiceImpl implements TnovelService {
 		if (i<1){
 			logger.warn("小说id:"+record.getnId()+"的小说浏览数量更新出错");
 		}
+	}
+
+	/**
+	 * 根据query 搜查小说名字和作者
+	 * @param query
+	 * @return
+	 */
+	@Override
+	public List<Tnovel> searchNovel(String query){
+		query = "%" + query + "%";
+		List<Tnovel> list = tnovelMapper.findNovelByQuery(query);
+		return list;
 	}
 
 

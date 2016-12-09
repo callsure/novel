@@ -31,4 +31,6 @@ public interface TnovelMapper {
 
     List<Tnovel> getHotNovelAllType(@Param("siteId") Integer siteId, @Param("typeId") Integer typeId);
 
+    List<Tnovel> findNovelByQuery(String query);
+
 }

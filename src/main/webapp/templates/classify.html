@@ -10,13 +10,14 @@
     <link rel="shortcut icon" href="../static/icon/book.ico" th:href="@{/static/icon/book.ico}" />
 </head>
 <body>
+<!--class body-->
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <ul class="content list-unstyled">
             <li>
                 <span class="theme bg" th:text="${typeNme}">热门</span>
             </li>
-            <th:block th:each="novel,index:${novels}">
+            <th:block th:if="${not #lists.isEmpty(novels)}" th:each="novel,index:${novels}">
                 <li>
                     <div class="cp">
                         <span class="stars stars-0"></span>
@@ -38,7 +39,8 @@
             </th:block>
         </ul>
     </div>
-    <div id="page" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+
+    <div id="page" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center" th:id="page" th:if="${not #lists.isEmpty(novels)}">
         <!--totalPage 小于等于 5 或者 totalPage大于5并且当前页小于等于3-->
         <div class="laypage_main laypageskin_default" th:with="lPage = ${lastPage > 5}? 5 : ${lastPage}, fPage = 1" th:if="${totalPage <= 5} or (${(totalPage > 5 and currPage <= 3)})">
             <a href="javascript:void(0);" class="laypage_prev" th:onclick="'loadMain(\'' + @{/} + ${path} + ${currPage - 1} + '\');'" th:if="${hasFirstPage}">上一页</a>
@@ -66,7 +68,9 @@
             </th:block>
             <a href="javascript:void(0);" class="laypage_next" th:onclick="'loadMain(\'' + @{/} + ${path} + ${currPage + 1} + '\');'" th:if="${hasNextPage}">下一页</a>
         </div>
-
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center" th:id="page" th:if="${#lists.isEmpty(novels)}">
+        哎哎,没有找到数据,请反馈至linrunshu@126.com邮箱...
     </div>
 </div>
 </body>

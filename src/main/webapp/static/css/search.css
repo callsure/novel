@@ -1,5 +1,14 @@
 /* 超小屏幕（手机，小于 768px） */
 /* 没有任何媒体查询相关的代码，因为这在 Bootstrap 中是默认的（还记得 Bootstrap 是移动设备优先的吗？） */
+.theme{
+    padding: 3px 20px;
+    background: #F0F7F0;
+    display: block;
+    color: #2EB182;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
 
 #page{
     background: #F6F4EC;

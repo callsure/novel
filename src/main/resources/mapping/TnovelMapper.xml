@@ -72,6 +72,12 @@
     where site_id = #{siteId}
     limit 5
   </select>
+  <select id="findNovelByQuery" parameterType="string" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_novel
+    where n_name like #{query} or n_author like #{query}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_novel
     where n_id = #{nId,jdbcType=INTEGER}

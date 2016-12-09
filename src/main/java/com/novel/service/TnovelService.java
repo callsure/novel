@@ -15,4 +15,6 @@ public interface TnovelService {
 	List<Tnovel> getHotNovelAllType(Integer siteId, List<Nclass> nclasses);
 
 	void updateBrowse(Tnovel record);
+
+	List<Tnovel> searchNovel(String query);
 }
