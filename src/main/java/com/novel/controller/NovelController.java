@@ -56,7 +56,7 @@ public class NovelController {
 		List<Tnovel> hotNovels = tnovelService.getHotNovelAllType(1018,nclasses);
 		model.addAttribute("nclasses", nclasses);
 		model.addAttribute("hotNovels", hotNovels);
-		model.addAttribute("classes",nclasses);
+		model.addAttribute("nclasses",nclasses);
 		return "index";
 	}
 
@@ -92,10 +92,15 @@ public class NovelController {
 
 		String path = "classify/" + id + "-";
 
+		List<Nclass> nclasses = this.getsNclassAll();
+
+		//小说类别导航
+		model.addAttribute("nclasses", nclasses);
+		//类别名
 		model.addAttribute("typeNme", typeNme);
-
+		//路径
 		model.addAttribute("path", path);
-
+		//小说列表数据
 		model.addAttribute("novels", list);
 		//当前页数
 		model.addAttribute("currPage",pageNum);
@@ -220,6 +225,19 @@ public class NovelController {
 	}
 
 	/**
+	 * 书架
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/bookshelf")
+	public String showBookshelf(Model model){
+		List<Nclass> nclasses = this.getsNclassAll();
+		//类别
+		model.addAttribute("nclasses", nclasses);
+		return "bookshelf";
+	}
+
+	/**
 	 * 获取全部的小说类别
 	 * @return
 	 */
@@ -227,4 +245,5 @@ public class NovelController {
 		List<Nclass> nclasses = ehcacheDB.getsNclassAll();
 		return nclasses;
 	}
+
 }

@@ -40,6 +40,23 @@ h1{
     padding-right: 10px;
 }
 
+.brand a{
+    font-size: 18px;
+    margin-right: 0px;
+    line-height: 30px;
+    text-decoration: none;
+    color: #0f0f0f;
+    font-weight: 100;
+}
+
+.brand a:hover{
+    color: #137fcf;
+}
+
+.brand a:last-child{
+    margin-right: 10px;
+}
+
 .toolbar li a{
     text-decoration:none;
     color: #FFFFFF;
@@ -92,6 +109,9 @@ h1{
         padding-bottom: 0;
         margin: 10px 0;
     }
+    .brand a{
+        margin-right: 60px;
+    }
 
 }
 
@@ -115,6 +135,9 @@ h1{
         padding-bottom: 0;
         margin: 10px 0;
     }
+    .brand a{
+        margin-right: 80px;
+    }
 }
 
 /* 大屏幕（大桌面显示器，大于等于 1200px） */
@@ -136,6 +159,9 @@ h1{
     #center .search{
         padding-bottom: 0;
         margin: 10px 0;
+    }
+    .brand a{
+        margin-right: 120px;
     }
 }
 

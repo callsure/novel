@@ -2,36 +2,42 @@
 /* 没有任何媒体查询相关的代码，因为这在 Bootstrap 中是默认的（还记得 Bootstrap 是移动设备优先的吗？） */
 .theme{
     padding: 3px 20px;
-    background: #F0F7F0;
     display: block;
     color: #2EB182;
-    margin-top: 10px;
+    margin-top: 5px;
     margin-bottom: 10px;
     font-size: 18px;
+    border-bottom: 1px dashed #c7c7c7;
 }
 
 #page{
-    background: #F6F4EC;
-    padding-top: 10px;
+    margin-bottom: 10px;
 }
-#page .laypage_main a{
+
+.bcp{
+    float: left;
+    text-align: center;
+    width: 80px;
+    color: #888888;
+}
+
+.bcp a{
     text-decoration: none;
-    border: 1px solid #8A8988;
-    padding: 4px 5px;
-    color: #8A8988;
-    font-size: 14px;
-    background: #FFFFFF;
-    margin: 0 5px;
 }
 
-#page .laypage_main a:hover{
-    color: #8A8988;
+.bcont{
+    border-left: 1px solid #eee;
+    padding: 0 10px;
+    margin: 8px 8% 8px 80px;
 }
 
-#page .laypage_main span{
-    margin: 0 6px;
-    font-size: 16px;
-    font-weight: 600;
+.bcont a{
+    margin-left: 0;
+    text-decoration: none;
+}
+
+.bcont .lastread{
+    margin-left: 5%;
 }
 
 /* 小屏幕（平板，大于等于 768px） */
@@ -47,15 +53,8 @@
     #foot{
         width: 97%;
     }
-    #page .laypage_main a{
-        padding: 6px 12px;
-        font-size: 15px;
-        margin: 0 8px;
-    }
-    #page .laypage_main span{
-        margin: 0 6px;
-        font-size: 16px;
-        font-weight: 600;
+    .bcont a{
+        margin-left: 10px;
     }
 }
 
@@ -72,15 +71,8 @@
     #foot{
         width: 90%;
     }
-    #page .laypage_main a{
-        padding: 7px 14px;
-        font-size: 15px;
-        margin: 0 8px;
-    }
-    #page .laypage_main span{
-        margin: 0 6px;
-        font-size: 16px;
-        font-weight: 600;
+    .bcont a{
+        margin-left: 10px;
     }
 }
 
@@ -97,14 +89,7 @@
     #foot{
         width: 82%;
     }
-    #page .laypage_main a{
-        padding: 8px 16px;
-        font-size: 15px;
-        margin: 0 8px;
-    }
-    #page .laypage_main span{
-        margin: 0 7px;
-        font-size: 16px;
-        font-weight: 600;
+    .bcont a{
+        margin-left: 10px;
     }
 }

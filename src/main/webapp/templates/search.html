@@ -14,29 +14,35 @@
     <link rel="shortcut icon" href="../static/icon/book.ico" th:href="@{/static/icon/book.ico}" />
     <script src="../static/js/jquery-3.1.0.min.js" th:src="@{/static/js/jquery-3.1.0.min.js}"></script>
     <script src="../static/dist/js/bootstrap.min.js" th:src="@{/static/dist/js/bootstrap.min.js}"></script>
+    <script src="../static/js/store.min.js" th:src="@{/static/js/store.min.js}"></script>
     <script src="../static/js/common.js" th:src="@{/static/js/common.js}"></script>
 </head>
 <body>
 <!-- head -->
 <div id="top" class="container-fluid">
-    <h1><div class="brand"><img src="../static/images/book.png" th:src="@{/static/images/book.png}" alt="汐灵书院,小说阅读网"/>汐灵书院</div></h1>
+    <h1>
+        <div class="brand"><img src="../static/images/book.png" th:src="@{/static/images/book.png}" alt="汐灵书院,小说阅读网"/>汐灵书院
+            <a href="javascript:void(0);" class="pull-right" th:onclick="'javascript:alert(\'还未实现,请等待!\')'">反馈</a>
+            <a href="javascript:void(0);" class="pull-right" th:href="@{/bookshelf}">我的书架</a>
+        </div>
+    </h1>
     <div class="toolbar row">
         <ul class="list-inline">
             <li><a href="/templates/index.html" th:href="@{/}">首页</a></li>
             <th:block th:each="item,index:${nclasses}">
-                <li><a href="/templates/index.html" th:href="'javascript:void(0);'" th:onclick="'loadMain(\'' + @{'/classify/'+${item.nTypeId}+'-1'}+'\');'" th:text="${item.nTypeName}"></a></li>
+                <li><a href="javascript:void(0);" th:href="@{'/classify/'+${item.nTypeId}+'-1'}" th:text="${item.nTypeName}"></a></li>
             </th:block>
         </ul>
     </div>
     <div id="center" class="row text-center">
         <div class="last col-xs-12 col-sm-8 col-md-7 col-lg-7">
             <img src="../static/images/book_open.png" th:src="@{/static/images/book_open.png}">
-            <a href="">最后阅读:[元气少年]第240章 我帮你磨墨帮你磨墨帮你磨墨</a>
+            <a href="javascript:void(0);">最后阅读:[元气少年]第240章 我帮你磨墨</a>
         </div>
         <div class="search col-xs-12 col-sm-4 col-md-5 col-lg-5">
             <div class="row">
-                <input type="text" id="search" class="form-control col-sm-2" placeholder="书名/作者">
-                <button type="button" class="btn btn-success col-sm-2" th:with="surl = @{/search(p=1 ,q='')}" th:onclick="'search(\''+${surl}+'\');'">搜索</button>
+                <input type="text" id="search" class="form-control col-sm-2" placeholder="书名/作者" th:value="${query}" th:onkeydown="'javascript:if(window.event.keyCode==13){document.getElementById(\'search-btn\').click();}'" th:onclick="'javascript:$(this).select();'">
+                <button id="search-btn" type="button" class="btn btn-success col-sm-2" th:with="surl = @{/search(p=1 ,q='')}" th:onclick="'search(\''+${surl}+'\');'">搜索</button>
             </div>
             <!--<input type="text" id="search" value="" placeholder="书名/作者">-->
             <!--<a href="javascript:void (0);" class="btn-search" id="btn-search">搜索</a>-->

@@ -11,6 +11,8 @@
     <link rel="shortcut icon" href="../static/icon/book.ico" th:href="@{/static/icon/book.ico}" />
     <script src="../static/js/jquery-3.1.0.min.js" th:src="@{/static/js/jquery-3.1.0.min.js}"></script>
     <script src="../static/dist/js/bootstrap.min.js" th:src="@{/static/dist/js/bootstrap.min.js}"></script>
+    <script src="../static/js/store.min.js" th:src="@{/static/js/store.min.js}"></script>
+    <script src="../static/js/common.js" th:src="@{/static/js/common.js}"></script>
 </head>
 <body>
 <!--chapter-->
@@ -27,12 +29,25 @@
             </div>
         </div>
     </div>
-    <div class="chapter text-center" th:text="${chapterDetail.title}">
+
+    <input type="hidden" name="novelId" th:value="${novel.nId}"/>
+    <input type="hidden" name="novelName" th:value="${novel.nName}"/>
+    <input type="hidden" name="novelUrl" th:with="url = @{'/chapter/'+${novel.nId}}" th:value="${url}"/>
+    <input type="hidden" name="chapter" th:value="${chapterDetail.title}"/>
+    <input type="hidden" name="chapterUrl" th:with="url = ${#httpServletRequest.getRequestURI()}+'?url='+${#httpServletRequest.getParameter('url')}" th:value="${url}"/>
+    <script>
+        //自动记录最后阅读章节
+        bookReadLast($("input[name='novelId']").val(), $("input[name='novelName']").val(), $("input[name='novelUrl']").val(), $("input[name='chapter']").val(), $("input[name='chapterUrl']").val());
+    </script>
+    <div class="chapter text-center" th:unless="${chapterDetail.title} eq null" th:text="${chapterDetail.title}">
         第1章 XXXX
     </div>
 
     <!--content-->
-    <div class="content" th:utext="${chapterDetail.content}">
+    <div class="content" th:unless="${chapterDetail.content} eq null" th:utext="${chapterDetail.content}">
+    </div>
+    <div class="content" th:unless="${chapterDetail.content} ne null">
+        哎哎,没有找到数据,请反馈至linrunshu@126.com邮箱...
     </div>
 
     <!--footlink-->
