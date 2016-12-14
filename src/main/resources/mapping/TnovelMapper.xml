@@ -251,7 +251,12 @@
   </update>
   <update id="updateByNameAndAuthor" parameterType="com.novel.beans.NovelDesc">
     update t_novel
-    set n_desc  = #{desc,jdbcType=VARCHAR}
+    <set>
+      <if test="novelType != null">
+        n_type = #{novelType,jdbcType=INTEGER},
+      </if>
+      n_desc  = #{desc,jdbcType=VARCHAR}
+    </set>
     where n_name = #{novelName,jdbcType=VARCHAR}
     and n_author = #{novelAuthor,jdbcType=VARCHAR}
     and site_id = #{siteId,jdbcType=INTEGER}

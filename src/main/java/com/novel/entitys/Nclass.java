@@ -10,6 +10,8 @@ public class Nclass implements Serializable {
 
     private String nTypeName;
 
+    private String nMapName;
+
     public Integer getnTypeId() {
         return nTypeId;
     }
@@ -26,11 +28,20 @@ public class Nclass implements Serializable {
         this.nTypeName = nTypeName == null ? null : nTypeName.trim();
     }
 
+    public String getnMapName() {
+        return nMapName;
+    }
+
+    public void setnMapName(String nMapName) {
+        this.nMapName = nMapName;
+    }
+
     @Override
     public String toString() {
         return "Nclass{" +
                 "nTypeId=" + nTypeId +
                 ", nTypeName='" + nTypeName + '\'' +
+                ", nMapName='" + nMapName + '\'' +
                 '}';
     }
 }

@@ -14,6 +14,8 @@ public class NovelDesc implements Serializable {
 
 	private String novelAuthor;
 
+	private Integer novelType;
+
 	private String desc;
 
 	public String getNovelName() {
@@ -48,12 +50,21 @@ public class NovelDesc implements Serializable {
 		this.siteId = siteId;
 	}
 
+	public Integer getNovelType() {
+		return novelType;
+	}
+
+	public void setNovelType(Integer novelType) {
+		this.novelType = novelType;
+	}
+
 	@Override
 	public String toString() {
 		return "NovelDesc{" +
 				"siteId=" + siteId +
 				", novelName='" + novelName + '\'' +
 				", novelAuthor='" + novelAuthor + '\'' +
+				", novelType=" + novelType +
 				", desc='" + desc + '\'' +
 				'}';
 	}

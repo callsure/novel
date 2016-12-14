@@ -71,9 +71,9 @@ public class NovelSpiderTask {
 	}
 
 	/**
-	 * 跟新简介
+	 * 更新简介
 	 */
-	@Scheduled(fixedDelay = 500_000,initialDelay = 60_000)
+	@Scheduled(fixedDelay = 5000_000,initialDelay = 60_000)
 	public void updateNovelDesc(){
 		if(flag) {
 			List<Tnovel> list = tnovelMapper.getsNovelAll();
@@ -131,7 +131,7 @@ public class NovelSpiderTask {
 			for (Tnovel tnovel : tnovels) {
 				for (int i = 0;i < tryTimes; i++){
 					String url = tnovel.getnUrl();
-					NovelDesc novelDesc = NovelDescSpiderFactory.getNovelDescSpider(url).setNovelDescInfo(url);
+					NovelDesc novelDesc = NovelDescSpiderFactory.getNovelDescSpider(url).setNovelDescInfo(url, tnovel);
 					System.out.println(novelDesc);
 					tnovelMapper.updateByNameAndAuthor(novelDesc);
 					break;

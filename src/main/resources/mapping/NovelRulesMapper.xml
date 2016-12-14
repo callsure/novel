@@ -20,10 +20,10 @@
         <result property="novelNameSelector" column="novel_name_selector"/>
         <result property="novelDescSelector" column="novel_desc_selector"/>
         <result property="novelAuthorSelector" column="novel_author_selector"/>
+        <result property="novelTypeSelector" column="novel_type_selector" />
     </resultMap>
 
     <sql id="novel">
-        SELECT
             n_novel_rules.site_id,
             n_novel_rules.site_name,
             n_novel_rules.chapter_charset,
@@ -38,10 +38,11 @@
             n_novel_rules.novel_next_page_selector,
             n_novel_rules.novel_name_selector,
             n_novel_rules.novel_desc_selector,
-            n_novel_rules.novel_author_selector
+            n_novel_rules.novel_author_selector,
+            n_novel_rules.novel_type_selector
     </sql>
     <select id="findNovelRulesList" resultMap="novelRules">
-        <include refid="novel" /> FROM `n_novel_rules`
+        SELECT <include refid="novel" /> FROM `n_novel_rules`
     </select>
 
 </mapper>

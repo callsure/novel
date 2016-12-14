@@ -39,6 +39,8 @@ public class NovelRules implements Serializable {
 
 	private String novelAuthorSelector;
 
+	private String novelTypeSelector;
+
 	public Integer getSiteId() {
 		return siteId;
 	}
@@ -157,5 +159,13 @@ public class NovelRules implements Serializable {
 
 	public void setNovelAuthorSelector(String novelAuthorSelector) {
 		this.novelAuthorSelector = novelAuthorSelector;
+	}
+
+	public String getNovelTypeSelector() {
+		return novelTypeSelector;
+	}
+
+	public void setNovelTypeSelector(String novelTypeSelector) {
+		this.novelTypeSelector = novelTypeSelector;
 	}
 }

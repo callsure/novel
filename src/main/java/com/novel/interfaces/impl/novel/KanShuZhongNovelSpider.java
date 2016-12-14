@@ -22,7 +22,7 @@ public class KanShuZhongNovelSpider extends AbstractNovelSpider {
 			for (int i = 1,size = trs.size() - 1;i < size;i++){
 				Elements tds = trs.get(i).getElementsByTag("td");
 				Novel novel = new Novel();
-				novel.setType(tds.first().getElementsByTag("span").first().text());
+				novel.setType("%"+tds.first().getElementsByTag("span").first().text()+"%");
 				novel.setNovelName(tds.get(1).getElementsByTag("span").first().text());
 				novel.setNovelUrl(tds.get(1).getElementsByTag("a").first().absUrl("href"));
 				novel.setLastUpdateChapter(tds.get(2).getElementsByTag("span").first().text());

@@ -22,4 +22,6 @@ public interface NclassMapper {
     void updateNovelRulesType();
 
     List<Nclass> getsNclassAll();
+
+    Nclass getNclassByTypeName(String typeName);
 }

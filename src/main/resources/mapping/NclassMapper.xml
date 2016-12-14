@@ -4,12 +4,13 @@
   <resultMap id="BaseResultMap" type="com.novel.entitys.Nclass" >
     <id column="n_type_id" property="nTypeId" jdbcType="INTEGER" />
     <result column="n_type_name" property="nTypeName" jdbcType="VARCHAR" />
+    <result column="n_map_name" property="nMapName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    n_type_id, n_type_name
+    n_type_id, n_type_name, n_map_name
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from n_class
     where n_type_id = #{nTypeId,jdbcType=INTEGER}
@@ -19,13 +20,21 @@
     <include refid="Base_Column_List" />
     from n_class
   </select>
+  <select id="getNclassByTypeName" parameterType="string" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from n_class
+    where n_map_name like #{typeName,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from n_class
     where n_type_id = #{nTypeId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.novel.entitys.Nclass" >
-    insert into n_class (n_type_id, n_type_name)
-    values (#{nTypeId,jdbcType=INTEGER}, #{nTypeName,jdbcType=VARCHAR})
+    insert into n_class (n_type_id, n_type_name, n_map_name
+    )
+    values (#{nTypeId,jdbcType=INTEGER}, #{nTypeName,jdbcType=VARCHAR}, #{nMapName,jdbcType=VARCHAR}
+    )
   </insert>
   <insert id="insertSelective" parameterType="com.novel.entitys.Nclass" >
     insert into n_class
@@ -36,6 +45,9 @@
       <if test="nTypeName != null" >
         n_type_name,
       </if>
+      <if test="nMapName != null" >
+        n_map_name,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="nTypeId != null" >
@@ -43,6 +55,9 @@
       </if>
       <if test="nTypeName != null" >
         #{nTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="nMapName != null" >
+        #{nMapName,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -52,12 +67,16 @@
       <if test="nTypeName != null" >
         n_type_name = #{nTypeName,jdbcType=VARCHAR},
       </if>
+      <if test="nMapName != null" >
+        n_map_name = #{nMapName,jdbcType=VARCHAR},
+      </if>
     </set>
     where n_type_id = #{nTypeId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.novel.entitys.Nclass" >
     update n_class
-    set n_type_name = #{nTypeName,jdbcType=VARCHAR}
+    set n_type_name = #{nTypeName,jdbcType=VARCHAR},
+      n_map_name = #{nMapName,jdbcType=VARCHAR}
     where n_type_id = #{nTypeId,jdbcType=INTEGER}
   </update>
   <update id="updateNovelRulesType">
