@@ -5,9 +5,10 @@
     <id column="n_type_id" property="nTypeId" jdbcType="INTEGER" />
     <result column="n_type_name" property="nTypeName" jdbcType="VARCHAR" />
     <result column="n_map_name" property="nMapName" jdbcType="VARCHAR" />
+    <result column="c_status" property="cStatus" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    n_type_id, n_type_name, n_map_name
+    n_type_id, n_type_name, n_map_name, c_status
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select
@@ -19,6 +20,7 @@
     select
     <include refid="Base_Column_List" />
     from n_class
+    where c_status != 0
   </select>
   <select id="getNclassByTypeName" parameterType="string" resultMap="BaseResultMap">
     select
@@ -31,10 +33,10 @@
     where n_type_id = #{nTypeId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.novel.entitys.Nclass" >
-    insert into n_class (n_type_id, n_type_name, n_map_name
-    )
-    values (#{nTypeId,jdbcType=INTEGER}, #{nTypeName,jdbcType=VARCHAR}, #{nMapName,jdbcType=VARCHAR}
-    )
+    insert into n_class (n_type_id, n_type_name, n_map_name,
+    c_status)
+    values (#{nTypeId,jdbcType=INTEGER}, #{nTypeName,jdbcType=VARCHAR}, #{nMapName,jdbcType=VARCHAR},
+    #{cStatus,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.novel.entitys.Nclass" >
     insert into n_class
@@ -48,6 +50,9 @@
       <if test="nMapName != null" >
         n_map_name,
       </if>
+      <if test="cStatus != null" >
+        c_status,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="nTypeId != null" >
@@ -58,6 +63,9 @@
       </if>
       <if test="nMapName != null" >
         #{nMapName,jdbcType=VARCHAR},
+      </if>
+      <if test="cStatus != null" >
+        #{cStatus,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -70,13 +78,17 @@
       <if test="nMapName != null" >
         n_map_name = #{nMapName,jdbcType=VARCHAR},
       </if>
+      <if test="cStatus != null" >
+        c_status = #{cStatus,jdbcType=INTEGER},
+      </if>
     </set>
     where n_type_id = #{nTypeId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.novel.entitys.Nclass" >
     update n_class
     set n_type_name = #{nTypeName,jdbcType=VARCHAR},
-      n_map_name = #{nMapName,jdbcType=VARCHAR}
+      n_map_name = #{nMapName,jdbcType=VARCHAR},
+      c_status = #{cStatus,jdbcType=INTEGER}
     where n_type_id = #{nTypeId,jdbcType=INTEGER}
   </update>
   <update id="updateNovelRulesType">

@@ -12,6 +12,8 @@ public class Nclass implements Serializable {
 
     private String nMapName;
 
+    private Integer cStatus;
+
     public Integer getnTypeId() {
         return nTypeId;
     }
@@ -34,6 +36,14 @@ public class Nclass implements Serializable {
 
     public void setnMapName(String nMapName) {
         this.nMapName = nMapName;
+    }
+
+    public Integer getcStatus() {
+        return cStatus;
+    }
+
+    public void setcStatus(Integer cStatus) {
+        this.cStatus = cStatus;
     }
 
     @Override
