@@ -62,7 +62,7 @@
   </update>
   <update id="updateNovelRulesType">
     <![CDATA[
-    {call NOVEL_TYPE()}
+    {call NOVEL_TYPE_DISTINCT()}
     ]]>
   </update>
 </mapper>

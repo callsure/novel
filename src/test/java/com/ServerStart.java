@@ -43,7 +43,7 @@ public class ServerStart {
 
 		Resource[] resources = new Resource[] {
 				Resource.newResource("src/main/webapp"),
-				Resource.newResource("out/production")
+				Resource.newResource("target/classes")
 		};
 		WebAppContext context = new WebAppContext();
 		context.setBaseResource(new ResourceCollection(resources));

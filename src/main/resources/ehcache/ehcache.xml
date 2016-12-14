@@ -2,7 +2,8 @@
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd" updateCheck="false">
 
-	<diskStore path="/Users/xlin/Work/cache/novel"/>
+	<!--<diskStore path="/Users/xlin/Work/cache/novel"/>-->
+	<diskStore path="/home/runshu/server/novel/cache"/>
 	<defaultCache maxElementsInMemory="10000" eternal="false"
 		overflowToDisk="true" timeToIdleSeconds="500" timeToLiveSeconds="1000"
 		diskPersistent="false" diskExpiryThreadIntervalSeconds="120" />   
