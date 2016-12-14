@@ -21,7 +21,7 @@ public class BxwxChapterSpider extends AbstractChapterSpider {
 				String o1Url = o1.getUrl();
 				String o2Url = o2.getUrl();
 				String index1 = o1Url.substring(o1Url.lastIndexOf('/'),o1Url.lastIndexOf('.'));
-				String index2 = o1Url.substring(o2Url.lastIndexOf('/'),o2Url.lastIndexOf('.'));
+				String index2 = o2Url.substring(o2Url.lastIndexOf('/'),o2Url.lastIndexOf('.'));
 				return index1.compareTo(index2);
 			}
 		});
