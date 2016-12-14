@@ -85,30 +85,30 @@
         <div id="page" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center" th:id="page" th:if="${not #lists.isEmpty(novels)}">
             <!--totalPage 小于等于 5 或者 totalPage大于5并且当前页小于等于3-->
             <div class="laypage_main laypageskin_default" th:with="lPage = ${lastPage > 5}? 5 : ${lastPage}, fPage = 1" th:if="${totalPage <= 5} or (${(totalPage > 5 and currPage <= 3)})">
-                <a href="javascript:void(0);" class="laypage_prev" th:onclick="'loadMain(\'' + @{/} + ${path} + ${currPage - 1} + '\');'" th:if="${hasFirstPage}">上一页</a>
+                <a href="javascript:void(0);" class="laypage_prev" th:with="prevUrl = @{/} + ${path} + ${currPage - 1}" th:href="${prevUrl}" th:if="${hasFirstPage}">上一页</a>
                 <th:block th:each="i:${#numbers.sequence(fPage,lPage)}">
                     <span class="laypage_curr" th:if="${currPage} eq ${i}" th:text="${i}">1</span>
-                    <a href="javascript:void(0);" th:if="${currPage} ne ${i}" th:onclick="'loadMain(\'' + @{/} + ${path} + ${i} + '\');'" th:text="${i}">1</a>
+                    <a href="javascript:void(0);" th:if="${currPage} ne ${i}" th:with="currUrl = @{/} + ${path} + ${i}" th:href="${currUrl}" th:text="${i}">1</a>
                 </th:block>
-                <a href="javascript:void(0);" class="laypage_next" th:onclick="'loadMain(\'' + @{/} + ${path} + ${currPage + 1} + '\');'" th:if="${hasNextPage}">下一页</a>
+                <a href="javascript:void(0);" class="laypage_next" th:with="nextUrl = @{/} + ${path} + ${currPage + 1}" th:href="${nextUrl}" th:if="${hasNextPage}">下一页</a>
             </div>
             <!--totalPage 大于 5 或者 totalPage大于5并且当前页大于3并且当前页小于totalPage-2-->
             <div class="laypage_main laypageskin_default" th:with="lPage = ${currPage + 2}, fPage = ${currPage - 2}" th:if="${(totalPage > 5 and currPage > 3 and lastPage > (currPage + 2))}">
-                <a href="javascript:void(0);" class="laypage_prev" th:onclick="'loadMain(\'' + @{/} + ${path} + ${currPage - 1} + '\');'" th:if="${hasFirstPage}">上一页</a>
+                <a href="javascript:void(0);" class="laypage_prev" th:with="prevUrl = @{/} + ${path} + ${currPage - 1}" th:href="${prevUrl}" th:if="${hasFirstPage}">上一页</a>
                 <th:block th:each="i:${#numbers.sequence(fPage,lPage)}">
                     <span class="laypage_curr" th:if="${currPage} eq ${i}" th:text="${i}">1</span>
-                    <a href="javascript:void(0);" th:if="${currPage} ne ${i}" th:onclick="'loadMain(\'' + @{/} + ${path} + ${i} + '\');'" th:text="${i}">1</a>
+                    <a href="javascript:void(0);" th:if="${currPage} ne ${i}" th:with="currUrl = @{/} + ${path} + ${i}" th:href="${currUrl}" th:text="${i}">1</a>
                 </th:block>
-                <a href="javascript:void(0);" class="laypage_next" th:onclick="'loadMain(\'' + @{/} + ${path} + ${currPage + 1} + '\');'" th:if="${hasNextPage}">下一页</a>
+                <a href="javascript:void(0);" class="laypage_next" th:with="nextUrl = @{/} + ${path} + ${currPage + 1}" th:href="${nextUrl}" th:if="${hasNextPage}">下一页</a>
             </div>
             <!--totalPage 大于 5 并且 当前页 + 2 大于等于 totalPage-->
             <div class="laypage_main laypageskin_default" th:with="lPage = ${lastPage}, fPage = ${lastPage - 5}" th:if="${(totalPage > 5 and currPage + 2 >= lastPage)}">
-                <a href="javascript:void(0);" class="laypage_prev" th:onclick="'loadMain(\'' + @{/} + ${path} + ${currPage - 1} + '\');'" th:if="${hasFirstPage}">上一页</a>
+                <a href="javascript:void(0);" class="laypage_prev" th:with="prevUrl = @{/} + ${path} + ${currPage - 1}" th:href="${prevUrl}" th:if="${hasFirstPage}">上一页</a>
                 <th:block th:each="i:${#numbers.sequence(fPage,lPage)}">
                     <span class="laypage_curr" th:if="${currPage} eq ${i}" th:text="${i}">1</span>
-                    <a href="javascript:void(0);" th:if="${currPage} ne ${i}" th:onclick="'loadMain(\'' + @{/} + ${path} + ${i} + '\');'" th:text="${i}">1</a>
+                    <a href="javascript:void(0);" th:if="${currPage} ne ${i}" th:with="currUrl = @{/} + ${path} + ${i}" th:href="${currUrl}" th:text="${i}">1</a>
                 </th:block>
-                <a href="javascript:void(0);" class="laypage_next" th:onclick="'loadMain(\'' + @{/} + ${path} + ${currPage + 1} + '\');'" th:if="${hasNextPage}">下一页</a>
+                <a href="javascript:void(0);" class="laypage_next" th:with="nextUrl = @{/} + ${path} + ${currPage + 1}" th:href="${nextUrl}" th:if="${hasNextPage}">下一页</a>
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center" th:id="page" th:if="${#lists.isEmpty(novels)}">
