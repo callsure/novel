@@ -62,8 +62,10 @@ public class NovelSpiderTask {
 			kanShuZhongNovelStorage.process();
 			bxwxNovelStorage.process();
 			//调用存储过程,update type
-			nclassMapper.updateNovelRulesType();
+			//nclassMapper.updateNovelRulesType();
 			tnovelMapper.updateNovelChapter();
+			//清除缓存
+			ehcacheDB.clean();
 		} catch (Exception e) {
 			loger.warn("小说列表更新失败:" + e);
 		}
