@@ -28,3 +28,4 @@ target/
 /src/main/resources/jdbc.properties
 /src/main/resources/ehcache/ehcache.xml
 /src/main/resources/ehcache/
+src/test/java/com/novel/tasks/

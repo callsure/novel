@@ -24,7 +24,9 @@ public class BxwxNovelDescSpider extends AbstractNovelDescSpider {
 	public NovelDesc setNovelDescInfo(String url, Tnovel tnovel) {
 		NovelDesc novelDesc = new NovelDesc();
 		try {
-			url = url.replace("/b/","/binfo/").replace("/index.html",".htm");
+			url = url.replace("/b/","/binfo/");
+			url = url.substring(0,url.length()-1);
+			url = url + ".htm";
 
 			NovelRules novelRules = NovelSpiderUtil.getContext(url);
 
@@ -38,7 +40,7 @@ public class BxwxNovelDescSpider extends AbstractNovelDescSpider {
 			selector = novelRules.getNovelTypeSelector();
 			element = super.getNovelDescInfo(url, selector);
 			String type = element.text();
-			type = "%" + type.substring(1) + "%";
+			type = "%" + type + "%";
 			Nclass nclass = nclassMapper.getNclassByTypeName(type);
 			novelDesc.setNovelType(nclass.getnTypeId());
 
@@ -49,7 +51,7 @@ public class BxwxNovelDescSpider extends AbstractNovelDescSpider {
 			//平台id
 			novelDesc.setSiteId(tnovel.getSiteId());
 		} catch (Exception e) {
-			throw new RuntimeException(novelDesc.getNovelName()+":简介截取出错!");
+			throw new RuntimeException(tnovel.getnName()+":简介截取出错!");
 		}
 		return novelDesc;
 	}

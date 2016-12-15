@@ -32,10 +32,12 @@ public class NovelDescSpiderTest extends BaseJunit {
 
 	@Test
 	public void BxwxNovelDescSpider(){
-//		List<Tnovel> list = ehcacheDB.getsNovelAll();
-		String url = "http://www.bxwx8.org/binfo/171/171702.htm";
-		NovelDesc novelDesc = NovelDescSpiderFactory.getNovelDescSpider(url).setNovelDescInfo(url,null);
-		System.out.println(novelDesc);
+		List<Tnovel> list = ehcacheDB.getsNovelAll();
+		for (Tnovel tnovel : list){
+			String url = tnovel.getnUrl();
+			NovelDesc novelDesc = NovelDescSpiderFactory.getNovelDescSpider(url).setNovelDescInfo(url,tnovel);
+			System.out.println(novelDesc);
+		}
 	}
 
 }

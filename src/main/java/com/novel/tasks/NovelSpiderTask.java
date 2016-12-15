@@ -134,7 +134,6 @@ public class NovelSpiderTask {
 				for (int i = 0;i < tryTimes; i++){
 					String url = tnovel.getnUrl();
 					NovelDesc novelDesc = NovelDescSpiderFactory.getNovelDescSpider(url).setNovelDescInfo(url, tnovel);
-					System.out.println(novelDesc);
 					tnovelMapper.updateByNameAndAuthor(novelDesc);
 					break;
 				}

@@ -15,7 +15,7 @@ public class KanShuZhongNovelDescSpider extends AbstractNovelDescSpider {
 
 	@Override
 	public NovelDesc setNovelDescInfo(String url, Tnovel tnovel) {
-		NovelDesc novelDesc = null;
+		NovelDesc novelDesc = new NovelDesc();
 		try {
 			NovelRules novelRules = NovelSpiderUtil.getContext(url);
 			String selector = novelRules.getNovelDescSelector();
@@ -31,7 +31,7 @@ public class KanShuZhongNovelDescSpider extends AbstractNovelDescSpider {
 			novelDesc.setDesc(desc);
 			novelDesc.setSiteId(tnovel.getSiteId());
 		} catch (Exception e) {
-			throw new RuntimeException(novelDesc.getNovelName()+":简介截取出错!");
+			throw new RuntimeException(tnovel.getnName()+":简介截取出错!");
 		}
 		return novelDesc;
 	}
