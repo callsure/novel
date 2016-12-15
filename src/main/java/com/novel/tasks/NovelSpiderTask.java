@@ -53,7 +53,7 @@ public class NovelSpiderTask {
 	@Resource
 	EhcacheDB ehcacheDB;
 
-	@Scheduled(cron = "0 15 2 ? * *")
+	@Scheduled(cron = "0 15 2,12 ? * *")
 	public void UpdateNovelInfo(){
 		//delete n_novel data
 		novelMapper.deleteNovelAll();
