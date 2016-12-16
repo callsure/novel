@@ -21,7 +21,7 @@ public class NovelDownloadTest extends BaseJunit {
 	public void novelDownload() throws Exception {
 		Configuration config = new Configuration();
 		config.setSavePath("/Users/xlin/oslin/novel");
-		novelDownload.novelDownload("http://www.23wx.com/html/28/28373/", config);
+		novelDownload.down("http://www.23wx.com/html/28/28373/", config);
 	}
 
 }

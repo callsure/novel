@@ -1,9 +1,8 @@
 package com.novel.interfaces.impl.desc;
 
-import com.novel.entitys.NovelRules;
+import com.novel.exceptions.CrawlException;
 import com.novel.interfaces.INovelDescSpider;
 import com.novel.interfaces.impl.AbstractSpide;
-import com.novel.utils.NovelSpiderUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -14,7 +13,7 @@ import org.jsoup.nodes.Element;
 public abstract class AbstractNovelDescSpider extends AbstractSpide implements INovelDescSpider {
 
 	@Override
-	public Element getNovelDescInfo(String url,String selector) {
+	public Element getNovelDescInfo(String url,String selector) throws CrawlException {
 		Document doc = this.getDoc(url);
 
 		String[] splits = selector.split("\\,");
@@ -22,7 +21,7 @@ public abstract class AbstractNovelDescSpider extends AbstractSpide implements I
 		return res;
 	}
 
-	protected Document getDoc(String url){
+	protected Document getDoc(String url) throws CrawlException {
 		String result = super.cwal(url);
 		Document doc = Jsoup.parse(result);
 		doc.setBaseUri(url);

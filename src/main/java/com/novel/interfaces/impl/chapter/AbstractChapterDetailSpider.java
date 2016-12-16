@@ -2,6 +2,7 @@ package com.novel.interfaces.impl.chapter;
 
 import com.novel.beans.ChapterDetail;
 import com.novel.entitys.NovelRules;
+import com.novel.exceptions.CrawlException;
 import com.novel.interfaces.IChapterDetailSpider;
 import com.novel.interfaces.impl.AbstractSpide;
 import com.novel.utils.NovelSpiderUtil;
@@ -14,7 +15,7 @@ import org.jsoup.nodes.Document;
 public abstract class AbstractChapterDetailSpider extends AbstractSpide implements IChapterDetailSpider {
 
 	@Override
-	public ChapterDetail getChapterDetail(String url) {
+	public ChapterDetail getChapterDetail(String url) throws CrawlException {
 		try {
 			String result = super.cwal(url);
 			result = result.replace("&nbsp;","${blank}").replace("<br />", "${line}").replace("<br/>", "${line}");

@@ -4,8 +4,9 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>汐灵书院</title>
+    <title th:title="${novel.nName}+',汐灵书院'">汐灵书院</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="keywords" th:content="${novel.nName}+'小说,全文阅读无弹窗,小说阅读网,汐灵书院'" content="小说,全文阅读无弹窗,小说阅读网,汐灵书院">
     <link href="../static/dist/css/bootstrap.min.css" rel="stylesheet" th:href="@{/static/dist/css/bootstrap.min.css}"/>
     <link href="../static/css/chapterDetail.css" rel="stylesheet" th:href="@{/static/css/chapterDetail.css}"/>
     <link rel="shortcut icon" href="../static/icon/book.ico" th:href="@{/static/icon/book.ico}" />

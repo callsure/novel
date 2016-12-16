@@ -47,7 +47,7 @@ public final class NovelSpiderUtil {
 	 * @param mergePathFile 合并后的文本文件,可以不传这个参数
 	 * @param deleteThisFile 合并后是否删除文件
 	 */
-	public static void multiFileMerge(String path, String mergePathFile, boolean deleteThisFile){
+	public static String multiFileMerge(String path, String mergePathFile, boolean deleteThisFile){
 		mergePathFile = mergePathFile == null ? path + "/merge/merge.txt" : path + "/merge/" + mergePathFile;
 		File[] files = new File(path).listFiles(new FileFilter() {
 			@Override
@@ -94,6 +94,7 @@ public final class NovelSpiderUtil {
 		} finally {
 			out.close();
 		}
+		return mergePathFile;
 	}
 
 	/**

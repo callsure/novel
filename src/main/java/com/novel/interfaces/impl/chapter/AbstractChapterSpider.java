@@ -2,6 +2,7 @@ package com.novel.interfaces.impl.chapter;
 
 import com.novel.beans.Chapter;
 import com.novel.entitys.NovelRules;
+import com.novel.exceptions.CrawlException;
 import com.novel.interfaces.IChapterSpider;
 import com.novel.interfaces.impl.AbstractSpide;
 import com.novel.utils.NovelSpiderUtil;
@@ -18,7 +19,7 @@ import java.util.List;
  */
 public abstract class AbstractChapterSpider extends AbstractSpide implements IChapterSpider {
 	@Override
-	public List<Chapter> getChapter(String url) {
+	public List<Chapter> getChapter(String url) throws CrawlException {
 		String res = super.cwal(url);
 		Document doc = Jsoup.parse(res);
 		doc.setBaseUri(url);

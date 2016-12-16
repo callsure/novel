@@ -1,6 +1,7 @@
 package com.novel.interfaces.impl.chapter;
 
 import com.novel.beans.Chapter;
+import com.novel.exceptions.CrawlException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -13,7 +14,7 @@ import java.util.List;
 @Service("bxwxChapterSpider")
 public class BxwxChapterSpider extends AbstractChapterSpider {
 	@Override
-	public List<Chapter> getChapter(String url) {
+	public List<Chapter> getChapter(String url) throws CrawlException {
 		List<Chapter> chapters = super.getChapter(url);
 		Collections.sort(chapters, new Comparator<Chapter>() {
 			@Override

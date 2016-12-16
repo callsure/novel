@@ -36,6 +36,7 @@ public class NovelDescSpiderTest extends BaseJunit {
 		for (Tnovel tnovel : list){
 			String url = tnovel.getnUrl();
 			NovelDesc novelDesc = NovelDescSpiderFactory.getNovelDescSpider(url).setNovelDescInfo(url,tnovel);
+			tnovelMapper.updateByNameAndAuthor(novelDesc);
 			System.out.println(novelDesc);
 		}
 	}

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.novel.mapper.DownNovelMapper" >
+  <resultMap id="BaseResultMap" type="com.novel.entitys.DownNovel" >
+    <id column="d_id" property="dId" jdbcType="INTEGER" />
+    <result column="n_id" property="nId" jdbcType="INTEGER" />
+    <result column="n_name" property="nName" jdbcType="VARCHAR" />
+    <result column="n_author" property="nAuthor" jdbcType="VARCHAR" />
+    <result column="n_url" property="nUrl" jdbcType="VARCHAR" />
+    <result column="site_id" property="siteId" jdbcType="INTEGER" />
+    <result column="save_path" property="savePath" jdbcType="VARCHAR" />
+    <result column="down_time" property="downTime" jdbcType="TIMESTAMP" />
+    <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
+    <result column="d_status" property="dStatus" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    d_id, n_id, n_name, n_author, n_url, site_id, save_path, down_time, is_delete, d_status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from down_novel
+    where d_id = #{dId,jdbcType=INTEGER}
+  </select>
+  <select id="getDownNovelByNId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List" />
+    from down_novel
+    where n_id = #{nId,jdbcType=INTEGER}  and is_delete = 1
+  </select>
+  <select id="getDownNovelByNIdNow" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List" />
+    from down_novel
+    where n_id = #{nId,jdbcType=INTEGER} and is_delete = 0 and d_status = 0
+  </select>
+  <select id="getsFinishDownLoadNovel" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from down_novel
+    where is_delete = 1 and d_status = 1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from down_novel
+    where d_id = #{dId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="dId" keyColumn="d_id" parameterType="com.novel.entitys.DownNovel" >
+    insert into down_novel (d_id, n_id, n_name, 
+      n_author, n_url, site_id, 
+      save_path, down_time, is_delete, 
+      d_status)
+    values (#{dId,jdbcType=INTEGER}, #{nId,jdbcType=INTEGER}, #{nName,jdbcType=VARCHAR}, 
+      #{nAuthor,jdbcType=VARCHAR}, #{nUrl,jdbcType=VARCHAR}, #{siteId,jdbcType=INTEGER}, 
+      #{savePath,jdbcType=VARCHAR}, #{downTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=INTEGER}, 
+      #{dStatus,jdbcType=INTEGER})
+    <selectKey resultType="java.lang.Integer" keyProperty="dId" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+  </insert>
+  <insert id="insertSelective" parameterType="com.novel.entitys.DownNovel" >
+    insert into down_novel
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dId != null" >
+        d_id,
+      </if>
+      <if test="nId != null" >
+        n_id,
+      </if>
+      <if test="nName != null" >
+        n_name,
+      </if>
+      <if test="nAuthor != null" >
+        n_author,
+      </if>
+      <if test="nUrl != null" >
+        n_url,
+      </if>
+      <if test="siteId != null" >
+        site_id,
+      </if>
+      <if test="savePath != null" >
+        save_path,
+      </if>
+      <if test="downTime != null" >
+        down_time,
+      </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
+      <if test="dStatus != null" >
+        d_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dId != null" >
+        #{dId,jdbcType=INTEGER},
+      </if>
+      <if test="nId != null" >
+        #{nId,jdbcType=INTEGER},
+      </if>
+      <if test="nName != null" >
+        #{nName,jdbcType=VARCHAR},
+      </if>
+      <if test="nAuthor != null" >
+        #{nAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="nUrl != null" >
+        #{nUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="siteId != null" >
+        #{siteId,jdbcType=INTEGER},
+      </if>
+      <if test="savePath != null" >
+        #{savePath,jdbcType=VARCHAR},
+      </if>
+      <if test="downTime != null" >
+        #{downTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="dStatus != null" >
+        #{dStatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.novel.entitys.DownNovel" >
+    update down_novel
+    <set >
+      <if test="nId != null" >
+        n_id = #{nId,jdbcType=INTEGER},
+      </if>
+      <if test="nName != null" >
+        n_name = #{nName,jdbcType=VARCHAR},
+      </if>
+      <if test="nAuthor != null" >
+        n_author = #{nAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="nUrl != null" >
+        n_url = #{nUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="siteId != null" >
+        site_id = #{siteId,jdbcType=INTEGER},
+      </if>
+      <if test="savePath != null" >
+        save_path = #{savePath,jdbcType=VARCHAR},
+      </if>
+      <if test="downTime != null" >
+        down_time = #{downTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="dStatus != null" >
+        d_status = #{dStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where d_id = #{dId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.novel.entitys.DownNovel" >
+    update down_novel
+    set n_id = #{nId,jdbcType=INTEGER},
+      n_name = #{nName,jdbcType=VARCHAR},
+      n_author = #{nAuthor,jdbcType=VARCHAR},
+      n_url = #{nUrl,jdbcType=VARCHAR},
+      site_id = #{siteId,jdbcType=INTEGER},
+      save_path = #{savePath,jdbcType=VARCHAR},
+      down_time = #{downTime,jdbcType=TIMESTAMP},
+      is_delete = #{isDelete,jdbcType=INTEGER},
+      d_status = #{dStatus,jdbcType=INTEGER}
+    where d_id = #{dId,jdbcType=INTEGER}
+  </update>
+</mapper>

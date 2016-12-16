@@ -33,7 +33,7 @@
     n_last_update_chapter_url, n_last_update_time, n_browse, first_letter
     from t_novel
     inner join n_class on n_class.n_type_id = t_novel.n_type
-    where t_novel.n_type = #{type} order by n_browse
+    where t_novel.n_type = #{type} order by n_browse DESC
   </select>
   <select id="getsNovelAll" resultMap="BaseResultMap">
     select
@@ -69,7 +69,12 @@
         from v_type_view_8
       </otherwise>
     </choose>
-    where site_id = #{siteId}
+    <where>
+      <if test="siteId != null">
+        site_id = #{siteId}
+      </if>
+    </where>
+    ORDER BY n_browse DESC
     limit 5
   </select>
   <select id="findNovelByQuery" parameterType="string" resultMap="BaseResultMap">

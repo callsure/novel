@@ -1,14 +1,21 @@
 package com.novel.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.novel.beans.Chapter;
 import com.novel.beans.ChapterDetail;
+import com.novel.beans.JsonBean;
+import com.novel.entitys.DownNovel;
 import com.novel.entitys.Nclass;
 import com.novel.entitys.Tnovel;
+import com.novel.service.DownLoadService;
 import com.novel.service.NovelService;
 import com.novel.service.TnovelService;
 import com.novel.service.impl.EhcacheDB;
+import com.novel.utils.RandomStringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +27,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
-import java.io.UnsupportedEncodingException;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.net.URLDecoder;
 import java.util.List;
 
@@ -44,6 +52,9 @@ public class NovelController {
 	@Resource
 	private TnovelService tnovelService;
 
+	@Resource
+	DownLoadService downLoadService;
+
 	/**
 	 * 网站首页
 	 * @param model
@@ -53,7 +64,7 @@ public class NovelController {
 	public String index(Model model){
 		//默认查找看书中的热门书籍
 		List<Nclass> nclasses = this.getsNclassAll();
-		List<Tnovel> hotNovels = tnovelService.getHotNovelAllType(1018,nclasses);
+		List<Tnovel> hotNovels = tnovelService.getHotNovelAllType(null,nclasses);
 		model.addAttribute("nclasses", nclasses);
 		model.addAttribute("hotNovels", hotNovels);
 		model.addAttribute("nclasses",nclasses);
@@ -235,6 +246,54 @@ public class NovelController {
 		//类别
 		model.addAttribute("nclasses", nclasses);
 		return "bookshelf";
+	}
+
+	/**
+	 * 小说下载
+	 * @param id
+	 * @param response
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/downBook/{id}")
+	public void downBook(@PathVariable Integer id, HttpServletResponse response) throws IOException {
+		String res = "";
+		JsonBean jsonBean = downLoadService.downLoadNovel(id);
+		if (jsonBean.isSuccess()){
+			String key = RandomStringUtil.setToken(jsonBean);
+			jsonBean.setMsg(key);
+		}
+		res = JSONObject.toJSONString(jsonBean);
+		response.setCharacterEncoding("utf-8");
+		response.getWriter().println(res);
+	}
+
+	/**
+	 * token下载小说
+	 * @param token
+	 * @param response
+	 */
+	@RequestMapping(value = "/download")
+	public void down(@RequestParam("token") String token, HttpServletResponse response){
+		JsonBean jsonBean = RandomStringUtil.getToken(token);
+		if (jsonBean.isSuccess()){
+			try {
+				File file = new File(jsonBean.getSavePath());
+				String filename = jsonBean.getNovelName();
+				response.setContentType("multipart/form-data");
+				response.setHeader("Content-Disposition", "attachment; filename=\"" + java.net.URLEncoder.encode(filename, "UTF-8") + "\"");
+				FileInputStream fin = new FileInputStream(file);
+				OutputStream out = response.getOutputStream();
+				byte b[] = new byte[1024];
+				int len = 0;
+				while ((len = fin.read(b)) > 0) {
+					out.write(b, 0, len);
+				}
+				fin.close();
+				out.flush();
+			} catch (IOException e) {
+				logger.error("文件下载出错!");
+			}
+		}
 	}
 
 	/**
