@@ -249,7 +249,7 @@ public class NovelController {
 	}
 
 	/**
-	 * 小说下载
+	 * 小说下载申请(只有申请下载系统才去下载小说)
 	 * @param id
 	 * @param response
 	 * @throws IOException
@@ -268,30 +268,32 @@ public class NovelController {
 	}
 
 	/**
-	 * token下载小说
+	 * token下载小说(系统下载完成后,会在用户再次请求时给予令牌,才能下载小说)
 	 * @param token
 	 * @param response
 	 */
 	@RequestMapping(value = "/download")
 	public void down(@RequestParam("token") String token, HttpServletResponse response){
 		JsonBean jsonBean = RandomStringUtil.getToken(token);
-		if (jsonBean.isSuccess()){
-			try {
-				File file = new File(jsonBean.getSavePath());
-				String filename = jsonBean.getNovelName();
-				response.setContentType("multipart/form-data");
-				response.setHeader("Content-Disposition", "attachment; filename=\"" + java.net.URLEncoder.encode(filename, "UTF-8") + "\"");
-				FileInputStream fin = new FileInputStream(file);
-				OutputStream out = response.getOutputStream();
-				byte b[] = new byte[1024];
-				int len = 0;
-				while ((len = fin.read(b)) > 0) {
-					out.write(b, 0, len);
+		if (jsonBean != null){
+			if (jsonBean.isSuccess()){
+				try {
+					File file = new File(jsonBean.getSavePath());
+					String filename = jsonBean.getNovelName();
+					response.setContentType("multipart/form-data");
+					response.setHeader("Content-Disposition", "attachment; filename=\"" + java.net.URLEncoder.encode(filename, "UTF-8") + "\"");
+					FileInputStream fin = new FileInputStream(file);
+					OutputStream out = response.getOutputStream();
+					byte b[] = new byte[1024];
+					int len = 0;
+					while ((len = fin.read(b)) > 0) {
+						out.write(b, 0, len);
+					}
+					fin.close();
+					out.flush();
+				} catch (IOException e) {
+					logger.error("文件下载出错!");
 				}
-				fin.close();
-				out.flush();
-			} catch (IOException e) {
-				logger.error("文件下载出错!");
 			}
 		}
 	}
