@@ -9,7 +9,6 @@ import com.novel.beans.JsonBean;
 import com.novel.entitys.Nclass;
 import com.novel.entitys.Tnovel;
 import com.novel.service.DownLoadService;
-import com.novel.service.NovelService;
 import com.novel.service.TnovelService;
 import com.novel.service.impl.EhcacheDB;
 import com.novel.utils.RandomStringUtil;
@@ -39,13 +38,10 @@ public class NovelController {
 
 	private static final Logger logger = LoggerFactory.getLogger(NovelController.class);
 
-	private final Integer pageSize = 10;
+	private static final Integer pageSize = 10;
 
 	@Resource(name = "ehcacheDB")
 	private EhcacheDB ehcacheDB;
-
-	@Resource
-	private NovelService novelService;
 
 	@Resource
 	private TnovelService tnovelService;
@@ -81,9 +77,9 @@ public class NovelController {
 	 */
 	@RequestMapping(value = "/classify/{id}-{pageNum}")
 	public String getsHotNovelByType(@PathVariable String id,@PathVariable Integer pageNum, Model model){
-		pageNum = pageNum == null?1:pageNum;
-		PageHelper.startPage(pageNum,pageSize);
-		List<Tnovel> list = ehcacheDB.getsNovelByType(id, pageNum);
+		Integer pagenumber = pageNum == null?1:pageNum;
+		PageHelper.startPage(pagenumber,pageSize);
+		List<Tnovel> list = ehcacheDB.getsNovelByType(id, pagenumber);
 		PageInfo<Tnovel> page = new PageInfo<>(list);
 
 		String typeNme  = "";
@@ -105,7 +101,7 @@ public class NovelController {
 		//小说列表数据
 		model.addAttribute("novels", list);
 		//当前页数
-		model.addAttribute("currPage",pageNum);
+		model.addAttribute("currPage",pagenumber);
 		//总数的数量
 		model.addAttribute("total",page.getTotal());
 		//第一页
@@ -115,9 +111,9 @@ public class NovelController {
 		//总的页数
 		model.addAttribute("totalPage",page.getPages());
 		//是否有前一页
-		model.addAttribute("hasFirstPage",(pageNum!=1)?true:false);
+		model.addAttribute("hasFirstPage",(pagenumber!=1)?true:false);
 		//是否有后一页
-		model.addAttribute("hasNextPage",(page.getLastPage()!=pageNum)?true:false);
+		model.addAttribute("hasNextPage",(page.getLastPage()!=pagenumber)?true:false);
 
 		model.addAttribute("site", SiteUtil.getSite());
 		model.addAttribute("email", SiteUtil.getEmail());
@@ -224,12 +220,12 @@ public class NovelController {
 	@RequestMapping(value = "/search")
 	public String searchNovel(@RequestParam("q") String query, @RequestParam("p") Integer pageNum, Model model){
 		try {
-			query = URLDecoder.decode(query, "utf-8");
+			String querys = URLDecoder.decode(query, "utf-8");
 
-			pageNum = pageNum == null?1:pageNum;
-			PageHelper.startPage(pageNum,pageSize);
+			Integer pagenumber = pageNum == null?1:pageNum;
+			PageHelper.startPage(pagenumber,pageSize);
 
-			List<Tnovel> tnovels = tnovelService.searchNovel(query);
+			List<Tnovel> tnovels = tnovelService.searchNovel(querys);
 			PageInfo<Tnovel> page = new PageInfo<>(tnovels);
 
 			for (Tnovel tnovel : tnovels) {
@@ -241,11 +237,11 @@ public class NovelController {
 			//类别
 			model.addAttribute("nclasses", nclasses);
 			//查询词
-			model.addAttribute("query", query);
+			model.addAttribute("query", querys);
 			//搜索结果
 			model.addAttribute("novels", tnovels);
 			//当前页数
-			model.addAttribute("currPage",pageNum);
+			model.addAttribute("currPage",pagenumber);
 			//总数的数量
 			model.addAttribute("total",page.getTotal());
 			//第一页
@@ -255,9 +251,9 @@ public class NovelController {
 			//总的页数
 			model.addAttribute("totalPage",page.getPages());
 			//是否有前一页
-			model.addAttribute("hasFirstPage",(pageNum!=1)?true:false);
+			model.addAttribute("hasFirstPage",(pagenumber!=1)?true:false);
 			//是否有后一页
-			model.addAttribute("hasNextPage",(page.getLastPage()!=pageNum)?true:false);
+			model.addAttribute("hasNextPage",(page.getLastPage()!=pagenumber)?true:false);
 
 			model.addAttribute("site", SiteUtil.getSite());
 			model.addAttribute("email", SiteUtil.getEmail());

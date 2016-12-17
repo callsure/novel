@@ -13,7 +13,7 @@ public class EHcacheUtil {
 	private static EHcacheUtil ehcacheUtil;
 	private CacheManager cacheManager;
 	private Cache cache;
-	private final String ehcacheName = "novelChapter";
+	private static final String ehcacheName = "novelChapter";
 
 	private EHcacheUtil() {
 		cacheManager = SpringContextManager.getBean("cacheManagerFactor");

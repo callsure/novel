@@ -17,7 +17,7 @@ import java.util.List;
 @Service
 public class TnovelServiceImpl implements TnovelService {
 
-	private static Logger logger = Logger.getLogger(TnovelServiceImpl.class);
+	private static final Logger logger = Logger.getLogger(TnovelServiceImpl.class);
 
 	@Resource
 	TnovelMapper tnovelMapper;

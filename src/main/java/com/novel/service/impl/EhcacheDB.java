@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,19 +28,19 @@ import java.util.Map;
 @Service
 public class EhcacheDB {
 
-	private static Logger logger = LoggerFactory.getLogger(EhcacheDB.class);
+	private static final Logger logger = LoggerFactory.getLogger(EhcacheDB.class);
 
-	private final String novelRules = "novelRules";
+	private static final String novelRules = "novelRules";
 
-	private final Map<String,String> tnovelMap = new HashMap<>();
+	private static final Map<String,String> tnovelMap = new HashMap<>();
 
-	private final String nclass = "allnclass";
+	private static final String nclass = "allnclass";
 
-	private final String novelALL = "novelAll";
+	private static final String novelALL = "novelAll";
 
-	private final Map<String, String> novelMap = new HashMap<>();
+	private static final Map<String, String> novelMap = new HashMap<>();
 
-	private final Map<String, String> chapterDetailMap = new HashMap<>();
+	private static final Map<String, String> chapterDetailMap = new HashMap<>();
 
 	@Resource
 	private NovelRulesMapper novelRulesMapper;
@@ -143,7 +144,7 @@ public class EhcacheDB {
 			chapters = ChapterSpiderFactory.getChapterSpider(url).getChapter(url);
 		} catch (CrawlException e) {
 			logger.error(e.toString());
-			return null;
+			return new ArrayList<>();
 		}
 		EHcacheUtil.getInstance().put(key, chapters);
 		return chapters;

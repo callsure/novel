@@ -65,7 +65,7 @@ public abstract class AbstractNovelSpider extends AbstractSpide implements INove
 
 				return trs;
 			} catch (Exception e) {
-
+				e.printStackTrace();
 			}
 		}
 		throw new RuntimeException(url + "尝试了" + maxTryTimes + "次下载依然失败!");

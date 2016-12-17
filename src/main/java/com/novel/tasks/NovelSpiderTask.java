@@ -34,9 +34,9 @@ import java.util.concurrent.Future;
 @Component
 public class NovelSpiderTask {
 
-	private static Logger loger = LoggerFactory.getLogger(NovelSpiderTask.class);
+	private static final Logger loger = LoggerFactory.getLogger(NovelSpiderTask.class);
 
-	private final int size = 250;
+	private static final int size = 250;
 
 	private static boolean flag = true;
 

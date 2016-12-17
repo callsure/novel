@@ -14,7 +14,7 @@ public class RandomStringUtil {
 
 	private static final int length = 5;
 
-	public static Map<String, JsonBean> token = new HashMap<>();
+	public final static Map<String, JsonBean> token = new HashMap<>();
 
 	private RandomStringUtil() {}
 
@@ -26,7 +26,7 @@ public class RandomStringUtil {
 	public static String getRandomString(int length) {
 		String base = "abcdefghijklmnopqrstuvwxyz";
 		Random random = new Random();
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < length; i++) {
 			int number = random.nextInt(base.length());
 			sb.append(base.charAt(number));

@@ -48,7 +48,7 @@ public final class NovelSpiderUtil {
 	 * @param deleteThisFile 合并后是否删除文件
 	 */
 	public static String multiFileMerge(String path, String mergePathFile, boolean deleteThisFile){
-		mergePathFile = mergePathFile == null ? path + "/merge/merge.txt" : path + "/merge/" + mergePathFile;
+		String mergePathFileNew = mergePathFile == null ? path + "/merge/merge.txt" : path + "/merge/" + mergePathFile;
 		File[] files = new File(path).listFiles(new FileFilter() {
 			@Override
 			public boolean accept(File pathname) {
@@ -73,9 +73,9 @@ public final class NovelSpiderUtil {
 
 		PrintWriter out = null;
 		try {
-			File mergeFile = new File(mergePathFile.substring(0,mergePathFile.lastIndexOf('/')));
+			File mergeFile = new File(mergePathFileNew.substring(0,mergePathFileNew.lastIndexOf('/')));
 			mergeFile.mkdirs();
-			out = new PrintWriter(new File(mergePathFile),"utf-8");
+			out = new PrintWriter(new File(mergePathFileNew),"utf-8");
 			for (File file : files) {
 				BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file),"utf-8"));
 				String line = null;
@@ -94,7 +94,7 @@ public final class NovelSpiderUtil {
 		} finally {
 			out.close();
 		}
-		return mergePathFile;
+		return mergePathFileNew;
 	}
 
 	/**

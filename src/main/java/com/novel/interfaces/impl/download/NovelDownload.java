@@ -24,7 +24,7 @@ import java.util.concurrent.Future;
 @Component
 public class NovelDownload implements INovelDownload {
 
-	private static Logger logger = LoggerFactory.getLogger(NovelDownload.class);
+	private static final Logger logger = LoggerFactory.getLogger(NovelDownload.class);
 
 	@Override
 	public String down(String url, Configuration config) {
