@@ -20,23 +20,27 @@ import java.util.List;
 public abstract class AbstractChapterSpider extends AbstractSpide implements IChapterSpider {
 	@Override
 	public List<Chapter> getChapter(String url) throws CrawlException {
-		String res = super.cwal(url);
-		Document doc = Jsoup.parse(res);
-		doc.setBaseUri(url);
-		NovelRules novelRules = NovelSpiderUtil.getContext(url);
+		try {
+			String res = super.cwal(url);
+			Document doc = Jsoup.parse(res);
+			doc.setBaseUri(url);
+			NovelRules novelRules = NovelSpiderUtil.getContext(url);
 
-		String[] splits = novelRules.getNovelNameSelector().split("\\,");
-		String novelName = doc.select(splits[0]).get(Integer.parseInt(splits[1])).text();
+			String[] splits = novelRules.getNovelNameSelector().split("\\,");
+			String novelName = doc.select(splits[0]).get(Integer.parseInt(splits[1])).text();
 
-		Elements as = doc.select(novelRules.getChapterListSelector());
-		List<Chapter> chapters = new ArrayList<>();
-		for (Element a : as){
-			Chapter chapter = new Chapter();
-			chapter.setTitle(a.text());
-			chapter.setUrl(a.absUrl("href"));
-			chapter.setNovelName(novelName);
-			chapters.add(chapter);
+			Elements as = doc.select(novelRules.getChapterListSelector());
+			List<Chapter> chapters = new ArrayList<>();
+			for (Element a : as){
+				Chapter chapter = new Chapter();
+				chapter.setTitle(a.text());
+				chapter.setUrl(a.absUrl("href"));
+				chapter.setNovelName(novelName);
+				chapters.add(chapter);
+			}
+			return chapters;
+		} catch (Exception e) {
+			throw new CrawlException(e);
 		}
-		return chapters;
 	}
 }
