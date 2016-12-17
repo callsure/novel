@@ -4,7 +4,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>汐灵书院</title>
+    <title th:text="${site}">汐灵书院</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <link href="../static/dist/css/bootstrap.min.css" rel="stylesheet" th:href="@{/static/dist/css/bootstrap.min.css}"/>
     <link href="../static/css/top.css" rel="stylesheet" th:href="@{/static/css/top.css}"/>
@@ -21,7 +21,8 @@
 <!--head-->
 <div id="top" class="container-fluid">
     <h1>
-        <div class="brand"><img src="../static/images/book.png" th:src="@{/static/images/book.png}" alt="汐灵书院,小说阅读网"/>汐灵书院
+        <div class="brand"><img src="../static/images/book.png" th:src="@{/static/images/book.png}" th:alt="${site}+',小说阅读网'" alt="汐灵书院,小说阅读网"/>
+            <span th:text="${site}">汐灵书院</span>
             <a href="javascript:void(0);" class="pull-right" th:onclick="'javascript:alert(\'还未实现,请等待!\')'">反馈</a>
             <a href="javascript:void(0);" class="pull-right" th:href="@{/bookshelf}">我的书架</a>
         </div>
@@ -111,8 +112,8 @@
                 <a href="javascript:void(0);" class="laypage_next" th:with="nextUrl = @{/} + ${path} + ${currPage + 1}" th:href="${nextUrl}" th:if="${hasNextPage}">下一页</a>
             </div>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center" th:id="page" th:if="${#lists.isEmpty(novels)}">
-            哎哎,没有找到数据,请反馈至linrunshu@126.com邮箱...
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center" th:text="'哎哎,没有找到数据,请反馈至'+${email}+'邮箱...'" th:id="page" th:if="${#lists.isEmpty(novels)}">
+            哎哎,没有找到数据,请反馈至xxxxxx@xxx.com邮箱...
         </div>
     </div>
 </div>
@@ -123,19 +124,20 @@
         <div class="footlink col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="md text-left">
                 友情链接：
-                <a href="http://www.healing.vicp.net/" target="汐灵书院" th:href="@{/}">汐灵书院</a>
+                <a href="http://www.healing.vicp.net/" th:text="${site}" th:href="@{/}">汐灵书院</a>
                 <a href="http://www.kanshuzhong.com/" target="_blank">看书中</a>
+                <a href="http://www.bxwx8.org/" target="_blank">笔下文学</a>
             </div>
         </div>
         <div class="footcopy col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="cp">
                 <p>
                     Copyright © 2016
-                    <a href="http://www.healing.vicp.net" th:href="@{/}">汐灵书院</a>
+                    <a href="http://www.healing.vicp.net" th:text="${site}" th:href="@{/}">汐灵书院</a>
                     , All rights reserved。
                 </p>
-                <p>
-                    小说最新章节转载自网上，仅供书友试读，请书友支持正版，支持作者，试读后觉得不错，前往首发站点购买阅读。如有侵犯请来信告知，本站立即予以处理。反馈邮箱：linrunshu@126.com
+                <p th:text="'小说最新章节转载自网上，仅供书友试读，请书友支持正版，支持作者，试读后觉得不错，前往首发站点购买阅读。如有侵犯请来信告知，本站立即予以处理。反馈邮箱：'+${email}">
+                    小说最新章节转载自网上，仅供书友试读，请书友支持正版，支持作者，试读后觉得不错，前往首发站点购买阅读。如有侵犯请来信告知，本站立即予以处理。反馈邮箱：xxxxxx@xxx.com
                 </p>
             </div>
         </div>

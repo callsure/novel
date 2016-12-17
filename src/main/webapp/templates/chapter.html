@@ -4,9 +4,9 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${novel.nName}+',汐灵书院'">汐灵书院</title>
+    <title th:text="${novel.nName}+','+${site}">汐灵书院</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="keywords" th:content="${novel.nName}+'小说章节列表,全文阅读无弹窗,小说阅读网,汐灵书院'" content="小说,全文阅读无弹窗,小说阅读网,汐灵书院">
+    <meta name="keywords" th:content="${novel.nName}+'小说章节列表,全文阅读无弹窗,小说阅读网,'+${site}" content="小说,全文阅读无弹窗,小说阅读网,汐灵书院">
     <link href="../static/dist/css/bootstrap.min.css" rel="stylesheet" th:href="@{/static/dist/css/bootstrap.min.css}"/>
     <link href="../static/css/chapter.css" rel="stylesheet" th:href="@{/static/css/chapter.css}"/>
     <link rel="shortcut icon" href="../static/icon/book.ico" th:href="@{/static/icon/book.ico}" />
@@ -60,8 +60,8 @@
             <div th:text="${success}"></div>
         </th:block>
     </div>
-    <div class="catalog row text-center" th:if="${#lists.isEmpty(chapters)}">
-        哎哎,没有找到数据,请反馈至linrunshu@126.com邮箱...
+    <div class="catalog row text-center" th:text="'哎哎,没有找到数据,请反馈至'+${email}+'邮箱...'" th:if="${#lists.isEmpty(chapters)}">
+        哎哎,没有找到数据,请反馈至xxxxxx@xxx.com邮箱...
     </div>
 
     <!--footlink-->

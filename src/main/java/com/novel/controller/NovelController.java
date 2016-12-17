@@ -1,14 +1,11 @@
 package com.novel.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.novel.beans.Chapter;
 import com.novel.beans.ChapterDetail;
 import com.novel.beans.JsonBean;
-import com.novel.entitys.DownNovel;
 import com.novel.entitys.Nclass;
 import com.novel.entitys.Tnovel;
 import com.novel.service.DownLoadService;
@@ -16,6 +13,7 @@ import com.novel.service.NovelService;
 import com.novel.service.TnovelService;
 import com.novel.service.impl.EhcacheDB;
 import com.novel.utils.RandomStringUtil;
+import com.novel.utils.SiteUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,21 +63,14 @@ public class NovelController {
 		//默认查找看书中的热门书籍
 		List<Nclass> nclasses = this.getsNclassAll();
 		List<Tnovel> hotNovels = tnovelService.getHotNovelAllType(null,nclasses);
+
+		model.addAttribute("site", SiteUtil.getSite());
+		model.addAttribute("email", SiteUtil.getEmail());
 		model.addAttribute("nclasses", nclasses);
 		model.addAttribute("hotNovels", hotNovels);
 		model.addAttribute("nclasses",nclasses);
 		return "index";
 	}
-
-//	@RequestMapping(value = "/main", method = RequestMethod.GET)
-//	public String top(Model model){
-		//默认查找看书中的热门书籍
-//		List<Nclass> nclasses = this.getsNclassAll();
-//		List<Tnovel> hotNovels = tnovelService.getHotNovelAllType(1018,nclasses);
-//		model.addAttribute("nclasses", nclasses);
-//		model.addAttribute("hotNovels", hotNovels);
-//		return "main";
-//	}
 
 	/**
 	 * 获取类别小说列表
@@ -128,6 +119,9 @@ public class NovelController {
 		//是否有后一页
 		model.addAttribute("hasNextPage",(page.getLastPage()!=pageNum)?true:false);
 
+		model.addAttribute("site", SiteUtil.getSite());
+		model.addAttribute("email", SiteUtil.getEmail());
+
 		return "classify";
 	}
 
@@ -142,10 +136,8 @@ public class NovelController {
 		Tnovel tnovel = tnovelService.getNovelById(id);
 		List<Chapter> chapters = null;
 		String res = "";
-		try {
-			chapters = ehcacheDB.getsChapterById(tnovel);
-		} catch (Exception e) {
-			logger.warn(e.toString());
+		chapters = ehcacheDB.getsChapterById(tnovel);
+		if (chapters == null || chapters.isEmpty()){
 			res = "哎哎哎,数据抓取出错了!";
 		}
 
@@ -158,7 +150,40 @@ public class NovelController {
 		model.addAttribute("success", res);
 		model.addAttribute("novel",tnovel);
 		model.addAttribute("chapters", chapters);
+
+		model.addAttribute("site", SiteUtil.getSite());
+		model.addAttribute("email", SiteUtil.getEmail());
 		return "chapter";
+	}
+
+	/**
+	 * 最后阅读记录地址跳转
+	 * @param id
+	 * @param url
+	 * @param response
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/chapterDetail/{id}/last")
+	public void getLastReadChapterDetail(@PathVariable Integer id, @RequestParam("url") String url, HttpServletResponse response) throws IOException {
+		Tnovel tnovel = tnovelService.getNovelById(id);
+		List<Chapter> chapters = null;
+		chapters = ehcacheDB.getsChapterById(tnovel);
+		try {
+			Integer chapterId = null;
+			if (chapters != null && !chapters.isEmpty()) {
+				for (int i = 0, size = chapters.size(); i < size; i++) {
+					if (url.equals(chapters.get(i).getUrl())) {
+						chapterId = size - i;
+						break;
+					}
+				}
+				response.sendRedirect(chapterId + "?url=" + url);
+			}
+		} catch (IOException e) {
+			logger.error(e.toString());
+			response.setCharacterEncoding("utf-8");
+			response.getWriter().println("数据抓取出错");
+		}
 	}
 
 	/**
@@ -172,16 +197,21 @@ public class NovelController {
 	@RequestMapping(value = "/chapterDetail/{id}/{chapterId}")
 	public String shoeChapterDetail(@PathVariable Integer id, @PathVariable Integer chapterId, @RequestParam("url") String url, Model model){
 		Tnovel tnovel = tnovelService.getNovelById(id);
-		ChapterDetail chapterDetail = new ChapterDetail();
-		try {
-			chapterDetail = ehcacheDB.getChapterDetailByUrl(id, chapterId, url);
-			chapterDetail.setCountIndex(chapterId);
-		} catch (Exception e) {
-			logger.warn(e.toString());
+
+		ChapterDetail chapterDetail = ehcacheDB.getChapterDetailByUrl(id, chapterId, url);
+
+		if (chapterDetail == null){
+			chapterDetail = new ChapterDetail();
 			chapterDetail.setContent("哎哎哎,数据抓取出错了!");
 		}
+
+		chapterDetail.setCountIndex(chapterId);
+
 		model.addAttribute("chapterDetail", chapterDetail);
 		model.addAttribute("novel", tnovel);
+
+		model.addAttribute("site", SiteUtil.getSite());
+		model.addAttribute("email", SiteUtil.getEmail());
 		return "chapterDetail";
 	}
 
@@ -229,6 +259,9 @@ public class NovelController {
 			//是否有后一页
 			model.addAttribute("hasNextPage",(page.getLastPage()!=pageNum)?true:false);
 
+			model.addAttribute("site", SiteUtil.getSite());
+			model.addAttribute("email", SiteUtil.getEmail());
+
 		} catch (UnsupportedEncodingException e) {
 			logger.warn("query转码错误!");
 		}
@@ -245,11 +278,13 @@ public class NovelController {
 		List<Nclass> nclasses = this.getsNclassAll();
 		//类别
 		model.addAttribute("nclasses", nclasses);
+		model.addAttribute("site", SiteUtil.getSite());
+		model.addAttribute("email", SiteUtil.getEmail());
 		return "bookshelf";
 	}
 
 	/**
-	 * 小说下载申请(只有申请下载系统才去下载小说)
+	 * 小说下载申请(只有申请下载系统才去抓取并且打包小说)
 	 * @param id
 	 * @param response
 	 * @throws IOException

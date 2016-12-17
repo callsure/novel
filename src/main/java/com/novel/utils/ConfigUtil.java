@@ -23,7 +23,8 @@ public final class ConfigUtil {
 	 */
 	public static String getSysConfig(String key){
 		try{
-			return systemConfig.getString(key);
+			String value = new String(systemConfig.getString(key).getBytes("ISO-8859-1"), "utf-8");
+			return value;
 		}catch(Exception e){
 			throw new RuntimeException(e.toString());
 		}

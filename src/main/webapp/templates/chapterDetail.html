@@ -4,9 +4,9 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:title="${novel.nName}+',汐灵书院'">汐灵书院</title>
+    <title th:title="${novel.nName}+','+${site}">汐灵书院</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="keywords" th:content="${novel.nName}+'小说,全文阅读无弹窗,小说阅读网,汐灵书院'" content="小说,全文阅读无弹窗,小说阅读网,汐灵书院">
+    <meta name="keywords" th:content="${novel.nName}+'小说,全文阅读无弹窗,小说阅读网,'+${site}" content="小说,全文阅读无弹窗,小说阅读网,汐灵书院">
     <link href="../static/dist/css/bootstrap.min.css" rel="stylesheet" th:href="@{/static/dist/css/bootstrap.min.css}"/>
     <link href="../static/css/chapterDetail.css" rel="stylesheet" th:href="@{/static/css/chapterDetail.css}"/>
     <link rel="shortcut icon" href="../static/icon/book.ico" th:href="@{/static/icon/book.ico}" />
@@ -35,7 +35,7 @@
     <input type="hidden" name="novelName" th:value="${novel.nName}"/>
     <input type="hidden" name="novelUrl" th:with="url = @{'/chapter/'+${novel.nId}}" th:value="${url}"/>
     <input type="hidden" name="chapter" th:value="${chapterDetail.title}"/>
-    <input type="hidden" name="chapterUrl" th:with="url = ${#httpServletRequest.getRequestURI()}+'?url='+${#httpServletRequest.getParameter('url')}" th:value="${url}"/>
+    <input type="hidden" name="chapterUrl" th:with="url = @{'/chapterDetail/'+${novel.nId}}+'/last?url='+${#httpServletRequest.getParameter('url')}" th:value="${url}"/>
     <script>
         //自动记录最后阅读章节
         bookReadLast($("input[name='novelId']").val(), $("input[name='novelName']").val(), $("input[name='novelUrl']").val(), $("input[name='chapter']").val(), $("input[name='chapterUrl']").val());
@@ -47,8 +47,8 @@
     <!--content-->
     <div class="content" th:unless="${chapterDetail.content} eq null" th:utext="${chapterDetail.content}">
     </div>
-    <div class="content" th:unless="${chapterDetail.content} ne null">
-        哎哎,没有找到数据,请反馈至linrunshu@126.com邮箱...
+    <div class="content" th:text="'哎哎,没有找到数据,请反馈至'+${email}+'邮箱...'" th:unless="${chapterDetail.content} ne null">
+        哎哎,没有找到数据,请反馈至xxxxxx@xxx.com邮箱...
     </div>
 
     <!--footlink-->
