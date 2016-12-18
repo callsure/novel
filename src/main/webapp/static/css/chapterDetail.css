@@ -7,8 +7,10 @@ body{
 .title{
     background: #2EB182;
 }
-.title .link{
+.topbar{
     margin-left: 7%;
+}
+.title .link{
     font-size: 18px;
 }
 .title .link a{

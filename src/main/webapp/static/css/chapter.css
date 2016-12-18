@@ -6,8 +6,10 @@ body{
 .title{
     background: #2EB182;
 }
-.title .link{
+.topbar{
     margin-left: 7%;
+}
+.title .link{
     font-size: 18px;
 }
 .title .link a{
@@ -40,9 +42,6 @@ body{
     font-size: 15px;
 }
 
-.desc .info{
-    margin-left: 7%;
-}
 .desc .info .author{
     text-decoration: none;
     font-size: 15px;
@@ -85,9 +84,9 @@ body{
     .container {
         width: 750px;
     }
-    /*.title .link{*/
-        /*margin-left: 35px;*/
-    /*}*/
+    .desc .info{
+        margin-left: 7%;
+    }
 }
 
 /* 中等屏幕（桌面显示器，大于等于 992px） */
@@ -95,9 +94,9 @@ body{
     .container {
         width: 970px;
     }
-    /*.title .link{*/
-        /*margin-left: 45px;*/
-    /*}*/
+    .desc .info{
+        margin-left: 7%;
+    }
 }
 
 /* 大屏幕（大桌面显示器，大于等于 1200px） */
@@ -105,7 +104,7 @@ body{
     .container {
         width: 1170px;
     }
-    /*.title .link{*/
-        /*margin-left: 50px;*/
-    /*}*/
+    .desc .info{
+        margin-left: 7%;
+    }
 }

@@ -21,7 +21,7 @@
     <!--title-->
     <div class="title row">
         <div class="link col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <div class="row">
+            <div class="topbar row">
                 <a href="/" class="left text-center col-xs-2 col-sm-2 col-md-2 col-lg-2" th:href="@{/}">首页</a>
                 <span class="center text-center col-xs-6 col-sm-8 col-md-8 col-lg-9" th:text="${novel.nName}">
                     书名
@@ -36,7 +36,7 @@
         <div class="summary col-xs-12 col-sm-12 col-md-12 col-lg-12" th:text="'简介：' + ${novel.nDesc}">简介：</div>
         <div class="info col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="row">
-                <span class="col-xs-5 col-sm-7 col-md-8 col-lg-9">
+                <span class="col-xs-6 col-sm-7 col-md-8 col-lg-9">
                     作者: <a href="javascript:void(0);" th:href="@{/search(p=1,q=${novel.nAuthor})}" class="author" th:text="${novel.nAuthor}">XX</a>
                 </span>
                 <span class="col-xs-3 col-sm-2 col-md-1 col-lg-1">
