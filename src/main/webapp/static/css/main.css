@@ -150,6 +150,12 @@ body{
     background-position: -1px -1px;
 }
 
+@media (max-width: 400px) {
+    .bug{
+        display: none;
+    }
+}
+
 /* 小屏幕（平板，大于等于 768px） */
 @media (min-width: 768px) {
     .container {

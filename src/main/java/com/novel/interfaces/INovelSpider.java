@@ -10,8 +10,6 @@ import java.util.List;
  */
 public interface INovelSpider {
 
-	public static final int MAX_TRY_TIMES = 6;
-
 	/**
 	 * 获取小说列表
 	 * @param url

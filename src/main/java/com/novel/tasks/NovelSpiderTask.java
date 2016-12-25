@@ -100,7 +100,7 @@ public class NovelSpiderTask {
 		}
 	}
 
-	@Scheduled(cron = "0 15 2,12 ? * *")
+	@Scheduled(cron = "0 15 2,9,12,20 ? * *")
 	public void UpdateNovelInfo() {
 		//delete n_novel data
 		novelMapper.deleteNovelAll();
@@ -108,15 +108,15 @@ public class NovelSpiderTask {
 			//cache data insert n_novel
 			kanShuZhongNovelStorage.process();
 			bxwxNovelStorage.process();
+		} catch (Exception e) {
+			loger.warn("小说列表更新失败:" + e);
+		} finally {
 			//调用存储过程,update type
 			//nclassMapper.updateNovelRulesType();
 			tnovelMapper.updateNovelChapter();
 			//清除缓存
 			ehcacheDB.clean();
-		} catch (Exception e) {
-			loger.warn("小说列表更新失败:" + e);
 		}
-		ehcacheDB.clean();
 	}
 
 	/**

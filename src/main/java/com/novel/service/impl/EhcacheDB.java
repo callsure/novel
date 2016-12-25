@@ -132,6 +132,7 @@ public class EhcacheDB {
 	 * @return
 	 */
 	public List<Chapter> getsChapterById(Tnovel tnovel){
+		if (tnovel ==  null) return null;
 		String url = tnovel.getnUrl();
 		String key = "book"+tnovel.getnId();
 		novelMap.put(key, key);

@@ -41,7 +41,7 @@ public abstract class AbstractNovelStorage implements IProcessor {
 						if(novels != null && !novels.isEmpty()){
 							novelMapper.batchInsert(novels);
 						}
-						Thread.sleep(1_000);
+						Thread.sleep(10_000);
 					}
 					return key;
 				}

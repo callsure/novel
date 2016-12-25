@@ -18,6 +18,8 @@ import java.util.List;
  */
 public abstract class AbstractNovelSpider extends AbstractSpide implements INovelSpider {
 
+	public static final int MAX_TRY_TIMES = 10;
+
 	protected Element nextPageElement;
 
 	//下一页url
@@ -29,7 +31,7 @@ public abstract class AbstractNovelSpider extends AbstractSpide implements INove
 	 * @return
 	 */
 	protected Elements getsTr(String url) throws Exception{
-		return getsTr(url,INovelSpider.MAX_TRY_TIMES);
+		return getsTr(url,MAX_TRY_TIMES);
 	}
 
 	/**
@@ -40,7 +42,7 @@ public abstract class AbstractNovelSpider extends AbstractSpide implements INove
 	 * @throws Exception
 	 */
 	protected Elements getsTr(String url, Integer maxTryTimes) throws Exception{
-		maxTryTimes = maxTryTimes == null ? INovelSpider.MAX_TRY_TIMES : maxTryTimes;
+		maxTryTimes = maxTryTimes == null ? MAX_TRY_TIMES : maxTryTimes;
 		Elements trs = null;
 		for (int i = 0; i < maxTryTimes; i++){
 			try {
@@ -73,7 +75,7 @@ public abstract class AbstractNovelSpider extends AbstractSpide implements INove
 
 	@Override
 	public List<Novel> getsNovel(String url) {
-		return getsNovel(url,INovelSpider.MAX_TRY_TIMES);
+		return getsNovel(url,MAX_TRY_TIMES);
 	}
 
 	@Override
@@ -88,7 +90,7 @@ public abstract class AbstractNovelSpider extends AbstractSpide implements INove
 
 	@Override
 	public Iterator<List<Novel>> iterator(String firstPage) {
-		return iterator(firstPage, INovelSpider.MAX_TRY_TIMES);
+		return iterator(firstPage, MAX_TRY_TIMES);
 	}
 
 	@Override
