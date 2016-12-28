@@ -79,8 +79,10 @@
   </select>
   <select id="findNovelByQuery" parameterType="string" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List" />
+    n_id, n_name, n_author, n_url, n_class.n_type_name as n_type, n_desc, n_add_time, site_id, n_status, n_last_update_chapter,
+    n_last_update_chapter_url, n_last_update_time, n_browse, first_letter
     from t_novel
+    inner join n_class on n_class.n_type_id = t_novel.n_type
     where n_name like #{query} or n_author like #{query}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
