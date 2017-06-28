@@ -2,6 +2,7 @@ package com.novel.mapper;
 
 import com.base.BaseJunit;
 import com.novel.entitys.Novel;
+import com.novel.entitys.NovelList;
 import org.junit.Test;
 
 import javax.annotation.Resource;
@@ -17,6 +18,9 @@ public class NovelMapperTest extends BaseJunit {
 
 	@Resource
 	private NovelMapper novelMapper;
+
+	@Resource
+	private NovelListMapper novelListMapper;
 
 	@Test
 	public void batchInsert() throws Exception {
@@ -38,5 +42,14 @@ public class NovelMapperTest extends BaseJunit {
 		novels.add(novel2);
 		novelMapper.batchInsert(novels);
 	}
+
+	@Test
+	public void findListBySiteId() throws Exception {
+		List<NovelList> novelLists = novelListMapper.findNovelListListsBySiteId(1016);
+		for (NovelList novelList : novelLists){
+			System.out.println(novelList.getListMap() + "," + novelList.getListUrl());
+		}
+	}
+
 
 }

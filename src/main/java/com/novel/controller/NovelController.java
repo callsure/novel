@@ -322,6 +322,7 @@ public class NovelController {
 					}
 					fin.close();
 					out.flush();
+					out.close();
 				} catch (IOException e) {
 					logger.error("文件下载出错!");
 				}

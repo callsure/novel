@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.novel.mapper.NovelListMapper" >
+  <resultMap id="BaseResultMap" type="com.novel.entitys.NovelList" >
+    <id column="list_id" property="listId" jdbcType="INTEGER" />
+    <result column="list_map" property="listMap" jdbcType="VARCHAR" />
+    <result column="list_url" property="listUrl" jdbcType="VARCHAR" />
+    <result column="site_id" property="siteId" jdbcType="INTEGER" />
+    <result column="site_name" property="siteName" jdbcType="VARCHAR" />
+    <result column="site_china_name" property="siteChinaName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    list_id, list_map, list_url, site_id, site_name, site_china_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from n_novel_list
+    where list_id = #{listId,jdbcType=INTEGER}
+  </select>
+  <select id="findNovelListListsBySiteId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM n_novel_list
+    WHERE site_id = #{siteId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from n_novel_list
+    where list_id = #{listId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.novel.entitys.NovelList" >
+    insert into n_novel_list (list_id, list_map, list_url, 
+      site_id, site_name, site_china_name
+      )
+    values (#{listId,jdbcType=INTEGER}, #{listMap,jdbcType=VARCHAR}, #{listUrl,jdbcType=VARCHAR}, 
+      #{siteId,jdbcType=INTEGER}, #{siteName,jdbcType=VARCHAR}, #{siteChinaName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.novel.entitys.NovelList" >
+    insert into n_novel_list
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="listId != null" >
+        list_id,
+      </if>
+      <if test="listMap != null" >
+        list_map,
+      </if>
+      <if test="listUrl != null" >
+        list_url,
+      </if>
+      <if test="siteId != null" >
+        site_id,
+      </if>
+      <if test="siteName != null" >
+        site_name,
+      </if>
+      <if test="siteChinaName != null" >
+        site_china_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="listId != null" >
+        #{listId,jdbcType=INTEGER},
+      </if>
+      <if test="listMap != null" >
+        #{listMap,jdbcType=VARCHAR},
+      </if>
+      <if test="listUrl != null" >
+        #{listUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="siteId != null" >
+        #{siteId,jdbcType=INTEGER},
+      </if>
+      <if test="siteName != null" >
+        #{siteName,jdbcType=VARCHAR},
+      </if>
+      <if test="siteChinaName != null" >
+        #{siteChinaName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.novel.entitys.NovelList" >
+    update n_novel_list
+    <set >
+      <if test="listMap != null" >
+        list_map = #{listMap,jdbcType=VARCHAR},
+      </if>
+      <if test="listUrl != null" >
+        list_url = #{listUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="siteId != null" >
+        site_id = #{siteId,jdbcType=INTEGER},
+      </if>
+      <if test="siteName != null" >
+        site_name = #{siteName,jdbcType=VARCHAR},
+      </if>
+      <if test="siteChinaName != null" >
+        site_china_name = #{siteChinaName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where list_id = #{listId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.novel.entitys.NovelList" >
+    update n_novel_list
+    set list_map = #{listMap,jdbcType=VARCHAR},
+      list_url = #{listUrl,jdbcType=VARCHAR},
+      site_id = #{siteId,jdbcType=INTEGER},
+      site_name = #{siteName,jdbcType=VARCHAR},
+      site_china_name = #{siteChinaName,jdbcType=VARCHAR}
+    where list_id = #{listId,jdbcType=INTEGER}
+  </update>
+</mapper>

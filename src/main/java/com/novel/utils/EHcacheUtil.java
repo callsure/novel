@@ -10,7 +10,7 @@ import net.sf.ehcache.Element;
  * @author linrunshu
  */
 public class EHcacheUtil {
-	private static EHcacheUtil ehcacheUtil;
+	private static volatile EHcacheUtil ehcacheUtil;
 	private CacheManager cacheManager;
 	private Cache cache;
 	private static final String ehcacheName = "novelChapter";
@@ -31,9 +31,13 @@ public class EHcacheUtil {
 		this.cache = cache;
 	}
 
-	public synchronized static EHcacheUtil getInstance() {
+	public static EHcacheUtil getInstance() {
 		if (ehcacheUtil == null) {
-			return new EHcacheUtil();
+			synchronized (EHcacheUtil.class){
+				if (ehcacheUtil == null) {
+					return new EHcacheUtil();
+				}
+			}
 		}
 		return ehcacheUtil;
 	}

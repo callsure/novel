@@ -14,7 +14,7 @@ public class RandomStringUtil {
 
 	private static final int length = 5;
 
-	public final static Map<String, JsonBean> token = new HashMap<>();
+	public static final Map<String, JsonBean> token = new HashMap<>();
 
 	private RandomStringUtil() {}
 
