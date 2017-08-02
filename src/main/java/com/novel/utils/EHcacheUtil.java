@@ -10,36 +10,27 @@ import net.sf.ehcache.Element;
  * @author linrunshu
  */
 public class EHcacheUtil {
-	private static volatile EHcacheUtil ehcacheUtil;
+	private static volatile EHcacheUtil instance;
 	private CacheManager cacheManager;
 	private Cache cache;
 	private static final String ehcacheName = "novelChapter";
 
 	private EHcacheUtil() {
+		if (instance != null) throw new RuntimeException("instance is duplication!");
 		cacheManager = SpringContextManager.getBean("cacheManagerFactor");
 		this.cache = cacheManager.getCache(ehcacheName);
-	}
-
-	public Cache getCache() {
-		if (cache == null) {
-			throw new RuntimeException("无法获取到对应的cache!请检查配置文件");
-		}
-		return cache;
-	}
-
-	public void setCache(Cache cache) {
-		this.cache = cache;
+		instance = this;
 	}
 
 	public static EHcacheUtil getInstance() {
-		if (ehcacheUtil == null) {
+		if (instance == null) {
 			synchronized (EHcacheUtil.class){
-				if (ehcacheUtil == null) {
+				if (instance == null) {
 					return new EHcacheUtil();
 				}
 			}
 		}
-		return ehcacheUtil;
+		return instance;
 	}
 
 	/**

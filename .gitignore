@@ -24,3 +24,5 @@ src/main/resources/rebel.xml
 src/main/webapp/static/dist/.DS_Store
 src/test/resources/
 target/
+src/main/java/com/novel/AOP/
+src/test/java/com/base/test.java
