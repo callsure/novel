@@ -3,7 +3,7 @@ package com.novel.interfaces.impl.desc;
 import com.novel.beans.NovelDesc;
 import com.novel.entitys.Tnovel;
 import com.novel.mapper.TnovelMapper;
-import com.novel.utils.NovelDescSpiderFactory;
+import com.novel.factory.NovelDescSpiderFactory;
 import com.novel.utils.SpringContextManager;
 
 import java.util.List;

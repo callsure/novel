@@ -5,8 +5,8 @@ import com.novel.configuration.Configuration;
 import com.novel.exceptions.CrawlException;
 import com.novel.interfaces.IChapterSpider;
 import com.novel.interfaces.INovelDownload;
-import com.novel.utils.ChapterSpiderFactory;
-import com.novel.utils.NovelSpiderUtil;
+import com.novel.factory.ChapterSpiderFactory;
+import com.novel.factory.NovelSpiderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -28,52 +28,53 @@ public class NovelDownload implements INovelDownload {
 
 	@Override
 	public String down(String url, Configuration config) {
-		IChapterSpider spider = ChapterSpiderFactory.getChapterSpider(url);
-
-		List<Chapter> chapters = null;
+		List<Chapter> chapters;
 		try {
+			IChapterSpider spider = ChapterSpiderFactory.getChapterSpider(url);
 			chapters = spider.getChapter(url);
-		} catch (CrawlException e) {
+		} catch (Exception e) {
 			logger.error(e.toString());
 			return null;
 		}
-
-		int size = config.getSize();
-		//计算最大线程数量
-		int maxThreadSize = (int) Math.ceil(chapters.size()*1.0/size);
-		Map<String,List<Chapter>> downloadTaskAlloc = new HashMap<>();
-		for (int i=0;i<maxThreadSize;i++){
-			//0~100 100
-			//100~200
-			//200~300
-			int startIndex = i * size;
-			int endIndex = i==maxThreadSize-1?chapters.size() : i * size + size;
-			downloadTaskAlloc.put(startIndex + "-" + endIndex,chapters.subList(startIndex,endIndex));
-		}
-
-		//创建线程池
-		ExecutorService service = Executors.newFixedThreadPool(maxThreadSize);
-		List<Future> task = new ArrayList<>();
-
-		String savePath = config.getSavePath() + NovelSpiderUtil.getContext(url).getSiteName();
-		Random rand =new Random();
-		int i = rand.nextInt(10000000) + 1;
-		savePath += "/" + i;
-
-		File file = new File(savePath);
-		file.mkdirs();
-		for (Map.Entry<String,List<Chapter>> entry : downloadTaskAlloc.entrySet()){
-			String key = entry.getKey();
-			task.add(service.submit(new DownLoadCallable(entry.getValue(),savePath + "/" + key + ".txt",config.getTryTimes())));
-		}
-		service.shutdown();
-		for (Future<String> future : task){
-			try {
-				logger.info(future.get() + "下载完成!");
-			} catch (InterruptedException | ExecutionException e) {
-				logger.error(e.toString());
+		if (chapters != null && !chapters.isEmpty()) {
+			int size = config.getSize();
+			//计算最大线程数量
+			int maxThreadSize = (int) Math.ceil(chapters.size()*1.0/size);
+			Map<String,List<Chapter>> downloadTaskAlloc = new HashMap<>();
+			for (int i=0;i<maxThreadSize;i++){
+				//0~100 100
+				//100~200
+				//200~300
+				int startIndex = i * size;
+				int endIndex = i==maxThreadSize-1?chapters.size() : i * size + size;
+				downloadTaskAlloc.put(startIndex + "-" + endIndex,chapters.subList(startIndex,endIndex));
 			}
+
+			//创建线程池
+			ExecutorService service = Executors.newFixedThreadPool(maxThreadSize);
+			List<Future> task = new ArrayList<>();
+
+			String savePath = config.getSavePath() + NovelSpiderUtil.getContext(url).getSiteName();
+			Random rand =new Random();
+			int i = rand.nextInt(10000000) + 1;
+			savePath += "/" + i;
+
+			File file = new File(savePath);
+			file.mkdirs();
+			for (Map.Entry<String,List<Chapter>> entry : downloadTaskAlloc.entrySet()){
+				String key = entry.getKey();
+				task.add(service.submit(new DownLoadCallable(entry.getValue(),savePath + "/" + key + ".txt",config.getTryTimes())));
+			}
+			service.shutdown();
+			for (Future<String> future : task){
+				try {
+					logger.info(future.get() + "下载完成!");
+				} catch (InterruptedException | ExecutionException e) {
+					logger.error(e.toString());
+				}
+			}
+			return savePath;
 		}
-		return savePath;
+		return null;
 	}
 }

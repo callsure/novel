@@ -1,8 +1,7 @@
 package com.novel.interfaces.impl;
 
 import com.novel.exceptions.CrawlException;
-import com.novel.utils.NovelHttpGet;
-import com.novel.utils.NovelSpiderUtil;
+import com.novel.factory.NovelSpiderUtil;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;

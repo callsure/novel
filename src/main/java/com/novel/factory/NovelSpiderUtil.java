@@ -1,7 +1,8 @@
-package com.novel.utils;
+package com.novel.factory;
 
 import com.novel.entitys.NovelRules;
 import com.novel.service.impl.EhcacheDB;
+import com.novel.utils.SpringContextManager;
 
 import java.io.*;
 import java.text.ParseException;

@@ -268,7 +268,7 @@
     and n_author = #{novelAuthor,jdbcType=VARCHAR}
     and site_id = #{siteId,jdbcType=INTEGER}
   </update>
-  <update id="updateNovelChapter">
+  <update id="updateNovelChapter" statementType="CALLABLE">
     <![CDATA[
     {call NOVEL_FUNCTION()}
     ]]>

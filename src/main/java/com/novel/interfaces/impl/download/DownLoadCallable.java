@@ -4,7 +4,7 @@ import com.novel.beans.Chapter;
 import com.novel.beans.ChapterDetail;
 import com.novel.exceptions.CrawlException;
 import com.novel.interfaces.IChapterDetailSpider;
-import com.novel.utils.ChapterDetailSpiderFactory;
+import com.novel.factory.ChapterDetailSpiderFactory;
 
 import java.io.File;
 import java.io.IOException;

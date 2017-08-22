@@ -5,7 +5,7 @@ import com.novel.entitys.NovelRules;
 import com.novel.exceptions.CrawlException;
 import com.novel.interfaces.IChapterDetailSpider;
 import com.novel.interfaces.impl.AbstractSpide;
-import com.novel.utils.NovelSpiderUtil;
+import com.novel.factory.NovelSpiderUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 

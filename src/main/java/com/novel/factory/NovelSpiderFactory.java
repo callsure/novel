@@ -1,7 +1,8 @@
-package com.novel.utils;
+package com.novel.factory;
 
 import com.novel.entitys.NovelRules;
 import com.novel.interfaces.INovelSpider;
+import com.novel.utils.SpringContextManager;
 
 /**
  * 生产抓取小说列表的实现类
@@ -10,14 +11,14 @@ import com.novel.interfaces.INovelSpider;
 public final class NovelSpiderFactory {
 	private NovelSpiderFactory(){}
 
-	public static INovelSpider getNovelSpider(String url){
+	public static INovelSpider getNovelSpider(String url) throws Exception {
 		NovelRules novelRules = NovelSpiderUtil.getContext(url);
 		INovelSpider spider = null;
-		switch (novelRules.getSiteName()){
-			case "Bxwx":
+		switch (NovelRulesKey.valueOf(novelRules.getSiteName())){
+			case Bxwx:
 				spider = SpringContextManager.getBean("bxwxNovelSpider");
 				break;
-			case "KanShuZhong":
+			case KanShuZhong:
 				spider = SpringContextManager.getBean("kanShuZhongNovelSpider");
 				break;
 			default:

@@ -1,7 +1,8 @@
-package com.novel.utils;
+package com.novel.factory;
 
 import com.novel.entitys.NovelRules;
 import com.novel.interfaces.INovelDescSpider;
+import com.novel.utils.SpringContextManager;
 
 /**
  * 小说简介接口工厂
@@ -10,15 +11,15 @@ import com.novel.interfaces.INovelDescSpider;
 public final class NovelDescSpiderFactory {
 	private NovelDescSpiderFactory() {}
 
-	public static INovelDescSpider getNovelDescSpider(String url){
+	public static INovelDescSpider getNovelDescSpider(String url) throws Exception {
 		NovelRules novelRules = NovelSpiderUtil.getContext(url);
 		INovelDescSpider novelDescSpider = null;
-		switch (novelRules.getSiteName()){
-			case "Bxwx":
+		switch (NovelRulesKey.valueOf(novelRules.getSiteName())){
+			case Bxwx:
 				novelDescSpider = SpringContextManager.getBean("bxwxNovelDescSpider");break;
-			case "DingDianXiaoShuo":
-			case "BiQuGe":
-			case "KanShuZhong":
+			case DingDianXiaoShuo:
+			case BiQuGe:
+			case KanShuZhong:
 				novelDescSpider = SpringContextManager.getBean("kanShuZhongNovelDescSpider");break;
 		}
 		return novelDescSpider;

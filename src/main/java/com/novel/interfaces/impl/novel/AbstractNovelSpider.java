@@ -4,7 +4,7 @@ import com.novel.entitys.Novel;
 import com.novel.entitys.NovelRules;
 import com.novel.interfaces.INovelSpider;
 import com.novel.interfaces.impl.AbstractSpide;
-import com.novel.utils.NovelSpiderUtil;
+import com.novel.factory.NovelSpiderUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

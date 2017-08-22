@@ -1,9 +1,8 @@
 package com.novel.utils;
 
 import com.base.BaseJunit;
+import com.novel.factory.NovelSpiderUtil;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by runshu.lin on 16/12/3.

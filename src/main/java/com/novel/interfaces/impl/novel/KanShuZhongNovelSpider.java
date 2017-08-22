@@ -1,7 +1,7 @@
 package com.novel.interfaces.impl.novel;
 
 import com.novel.entitys.Novel;
-import com.novel.utils.NovelSpiderUtil;
+import com.novel.factory.NovelSpiderUtil;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 

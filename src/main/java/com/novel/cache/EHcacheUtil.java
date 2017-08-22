@@ -1,5 +1,6 @@
-package com.novel.utils;
+package com.novel.cache;
 
+import com.novel.utils.SpringContextManager;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;

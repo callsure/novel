@@ -6,7 +6,7 @@ import com.novel.interfaces.INovelSpider;
 import com.novel.interfaces.IProcessor;
 import com.novel.mapper.NovelListMapper;
 import com.novel.mapper.NovelMapper;
-import com.novel.utils.NovelSpiderFactory;
+import com.novel.factory.NovelSpiderFactory;
 
 import javax.annotation.Resource;
 import java.util.*;

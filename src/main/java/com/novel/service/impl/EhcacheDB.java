@@ -9,9 +9,9 @@ import com.novel.exceptions.CrawlException;
 import com.novel.mapper.NclassMapper;
 import com.novel.mapper.NovelRulesMapper;
 import com.novel.mapper.TnovelMapper;
-import com.novel.utils.ChapterDetailSpiderFactory;
-import com.novel.utils.ChapterSpiderFactory;
-import com.novel.utils.EHcacheUtil;
+import com.novel.factory.ChapterDetailSpiderFactory;
+import com.novel.factory.ChapterSpiderFactory;
+import com.novel.cache.EHcacheUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -136,18 +136,17 @@ public class EhcacheDB {
 		String url = tnovel.getnUrl();
 		String key = "book"+tnovel.getnId();
 		novelMap.put(key, key);
-		List<Chapter> chapters = null;
+		List<Chapter> chapters;
 		chapters = (List<Chapter>) EHcacheUtil.getInstance().get(key);
 		if(chapters != null && !chapters.isEmpty()){
 			return chapters;
 		}
 		try {
 			chapters = ChapterSpiderFactory.getChapterSpider(url).getChapter(url);
-		} catch (CrawlException e) {
+			EHcacheUtil.getInstance().put(key, chapters);
+		} catch (Exception e) {
 			logger.error(e.toString());
-			return new ArrayList<>();
 		}
-		EHcacheUtil.getInstance().put(key, chapters);
 		return chapters;
 	}
 
@@ -168,7 +167,7 @@ public class EhcacheDB {
 		}
 		try {
 			chapterDetails = ChapterDetailSpiderFactory.getChapterDetailSpider(url).getChapterDetail(url);
-		} catch (CrawlException e) {
+		} catch (Exception e) {
 			logger.error(e.toString());
 			return null;
 		}

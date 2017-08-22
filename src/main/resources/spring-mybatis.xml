@@ -14,9 +14,14 @@
     <!-- 引入配置文件 -->
     <bean id="propertyConfigurer"
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="location" value="classpath:jdbc.properties" />
-    </bean>
+        <property name="locations">
+            <array>
+                <value>classpath:jdbc.properties</value>
+                <value>classpath:redis.properties</value>
+            </array>
+        </property>
 
+    </bean>
     <!-- 配置防御SQL注入攻击 -->
     <bean id="wall-filter-config" class="com.alibaba.druid.wall.WallConfig" init-method="init">
         <!--指定配置装载的目录  -->
@@ -138,7 +143,7 @@
             <value>classpath:ehcache/ehcache.xml</value>
         </property>
     </bean>
-    <!--<import resource="classpath:motan-server/motan-server.xml"/>-->
+    <!--<import resource="classpath:redis/spring-redis.xml"/>-->
     <!--<import resource="classpath:motan-client/motan-client.xml"/>-->
 
 </beans>

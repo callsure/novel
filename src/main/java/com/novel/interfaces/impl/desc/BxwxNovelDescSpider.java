@@ -5,7 +5,7 @@ import com.novel.entitys.Nclass;
 import com.novel.entitys.NovelRules;
 import com.novel.entitys.Tnovel;
 import com.novel.mapper.NclassMapper;
-import com.novel.utils.NovelSpiderUtil;
+import com.novel.factory.NovelSpiderUtil;
 import org.jsoup.nodes.Element;
 import org.springframework.stereotype.Service;
 

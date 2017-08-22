@@ -4,7 +4,7 @@ import com.novel.configuration.Configuration;
 import com.novel.entitys.DownNovel;
 import com.novel.mapper.DownNovelMapper;
 import com.novel.utils.ConfigUtil;
-import com.novel.utils.NovelSpiderUtil;
+import com.novel.factory.NovelSpiderUtil;
 import com.novel.utils.SpringContextManager;
 
 /**
