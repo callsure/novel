@@ -131,7 +131,6 @@
       <groupId>com.alibaba</groupId>
       <artifactId>druid</artifactId>
       <version>1.0.18</version>
-      <optional>true</optional>
     </dependency>
 
     <!-- 阿里巴巴的json处理工具包 -->
