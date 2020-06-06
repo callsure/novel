@@ -4,6 +4,10 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 
   <display-name>Archetype Created Web Application</display-name>
+  <!-- 日志监听 -->
+  <listener>
+    <listener-class>com.novel.listener.LogListener</listener-class>
+  </listener>
   <!-- 编码过滤器 -->
   <filter>
     <filter-name>encodingFilter</filter-name>
